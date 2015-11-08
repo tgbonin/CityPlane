@@ -16,6 +16,18 @@ void AppClass::InitVariables(void)
 
 	m_pMeshMngr->LoadModel("Minecraft\\MC_Creeper.obj", "Creeper", false, glm::translate(0.0f, 0.0f, -3.0f) * glm::scale(vector3(2.0f)));
 
+	//Init the Bounding Object Manager and pass in the Mesh Manager 
+	m_pBOMngr = BoundingObjectMngr::Instance();
+	m_pBOMngr->InitMeshManager(m_pMeshMngr);
+
+	//Add Bounding Objects to the models
+	//**Must use the same names as when you load the models**
+	m_pBOMngr->AddBoundingObject("Steve");
+	m_pBOMngr->AddBoundingObject("Creeper");
+
+	//Set the visibility of the creeper's bounding box **used as a test for the method**
+	m_pBOMngr->SetBOVisibility("Creeper", true);
+
 	jtCamera->SetUp(vector3(0, 1, 0));
 	jtCamera->SetPosition(vector3(0.0f, 0.0f, 14.0f));
 	jtCamera->SetTarget(vector3(0.0f, 0.0f, 0.0f));
@@ -29,6 +41,22 @@ void AppClass::Update(void)
 
 	//Update the mesh manager's time without updating for collision detection
 	m_pMeshMngr->Update(false);
+
+	//Set the model matrices for both objects and Bounding Spheres
+	m_pMeshMngr->SetModelMatrix(glm::translate(m_v3O1) * ToMatrix4(m_qArcBall), "Steve");
+	m_pMeshMngr->SetModelMatrix(glm::translate(m_v3O2), "Creeper");
+
+	//set the matricies of the BO's 
+	m_pBOMngr->SetBOMatrix("Steve", m_pMeshMngr->GetModelMatrix("Steve"));
+	m_pBOMngr->SetBOMatrix("Creeper", m_pMeshMngr->GetModelMatrix("Creeper"));
+
+	//Check the Collisions of all of the Bounding Objects
+	m_pBOMngr->CheckCollisions();
+
+	//Render Bounding Objects
+	// **Like with the Mesh Manager, use the keyword "ALL" to render all stored BO's,
+	// or use the name of a model to only render that one.**
+	m_pBOMngr->RenderBoundingObjects("ALL");
 
 	//Adds all loaded instance to the render list
 	m_pMeshMngr->AddInstanceToRenderList("ALL");
