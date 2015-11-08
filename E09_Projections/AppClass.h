@@ -29,6 +29,9 @@ public:
 	vector3 m_v3O2 = vector3(2.5f, 0.0f, 0.0f);
 	vector3 m_v3O3 = vector3(1.0f, 1.0f, 0.0f);
 
+	vector3 m_v3b01 = vector3(-20.0f, 0.0f, -20.0f);
+	vector3 m_v3b02 = vector3(-20.0f, 0.0f, 10.0f);
+
 	/* Constructor */
 	AppClass(HINSTANCE hInstance, LPWSTR lpCmdLine, int nCmdShow) : super(hInstance, lpCmdLine, nCmdShow) {}
 

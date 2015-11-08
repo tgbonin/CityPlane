@@ -14,7 +14,10 @@ void AppClass::InitVariables(void)
 
 	m_pMeshMngr->LoadModel("Minecraft\\MC_Steve.obj", "Steve");
 
-	m_pMeshMngr->LoadModel("Minecraft\\MC_Creeper.obj", "Creeper", false, glm::translate(0.0f, 0.0f, -3.0f) * glm::scale(vector3(2.0f)));
+	m_pMeshMngr->LoadModel("Minecraft\\MC_Creeper.obj", "Creeper", false, glm::translate(-10.0f, 0.0f, -3.0f) * glm::scale(vector3(2.0f)));
+	
+	m_pMeshMngr->LoadModel("Buildings\\building1.obj", "TestBuilding1", false, glm::translate(50.0f, 0.0f, -50.0f));
+	m_pMeshMngr->LoadModel("Buildings\\building2.obj", "TestBuilding2", false, glm::translate(30.0f, 0.0f, -20.0f));
 
 	//Init the Bounding Object Manager and pass in the Mesh Manager 
 	m_pBOMngr = BoundingObjectMngr::Instance();
@@ -24,12 +27,14 @@ void AppClass::InitVariables(void)
 	//**Must use the same names as when you load the models**
 	m_pBOMngr->AddBoundingObject("Steve");
 	m_pBOMngr->AddBoundingObject("Creeper");
+	m_pBOMngr->AddBoundingObject("TestBuilding1");
+	m_pBOMngr->AddBoundingObject("TestBuilding2");
 
 	//Set the visibility of the creeper's bounding box **used as a test for the method**
 	m_pBOMngr->SetBOVisibility("Creeper", true);
 
 	jtCamera->SetUp(vector3(0, 1, 0));
-	jtCamera->SetPosition(vector3(0.0f, 0.0f, 14.0f));
+	jtCamera->SetPosition(vector3(0.0f, 50.0f, 30.0f));
 	jtCamera->SetTarget(vector3(0.0f, 0.0f, 0.0f));
 	jtCamera->SetUp(vector3(0.0f, 1.0f, 0.0f));
 }
@@ -46,9 +51,15 @@ void AppClass::Update(void)
 	m_pMeshMngr->SetModelMatrix(glm::translate(m_v3O1) * ToMatrix4(m_qArcBall), "Steve");
 	m_pMeshMngr->SetModelMatrix(glm::translate(m_v3O2), "Creeper");
 
+	m_pMeshMngr->SetModelMatrix(glm::translate(m_v3b01), "TestBuilding1");
+	m_pMeshMngr->SetModelMatrix(glm::translate(m_v3b02), "TestBuilding2");
+
 	//set the matricies of the BO's 
 	m_pBOMngr->SetBOMatrix("Steve", m_pMeshMngr->GetModelMatrix("Steve"));
 	m_pBOMngr->SetBOMatrix("Creeper", m_pMeshMngr->GetModelMatrix("Creeper"));
+
+	m_pBOMngr->SetBOMatrix("TestBuilding1", m_pMeshMngr->GetModelMatrix("TestBuilding1"));
+	m_pBOMngr->SetBOMatrix("TestBuilding2", m_pMeshMngr->GetModelMatrix("TestBuilding2"));
 
 	//Check the Collisions of all of the Bounding Objects
 	m_pBOMngr->CheckCollisions();
