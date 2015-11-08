@@ -7,6 +7,7 @@ class Camera
 public:
 	static Camera* Instance();
 	static glm::quat rotationQuat;
+	float fuel;
 
 	matrix4 GetView(void);
 	matrix4 GetProjection(bool bOrthographics);
@@ -23,6 +24,9 @@ public:
 	void ChangePitch(float fIncrement);
 	void ChangeRoll(float fIncrement);
 	void ChangeYaw(float fIncrement);
+
+	void useFuel(float fAmount);
+	void rechargeFuel(float fAmount);
 
 	glm::vec3 position, forward, up, right, target;
 

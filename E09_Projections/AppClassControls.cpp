@@ -40,24 +40,34 @@ void AppClass::ProcessKeyboard(void)
 	{
 	}
 
+	//boost
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 	{
-		jtCamera->MoveForward(0.1f);
+		if (jtCamera->fuel > 0.0f)
+		{
+			jtCamera->MoveForward(0.1f);
+			jtCamera->useFuel(1.0f);
+		}
 	}
 
+	//slow-down
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 	{
-		jtCamera->MoveForward(-0.1f);
+		if (jtCamera->fuel > 0.0f)
+		{
+			jtCamera->MoveForward(-0.05f);
+			jtCamera->useFuel(1.0f);
+		}
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	{
-		jtCamera->ChangeYaw(1.0f);
+		jtCamera->ChangeRoll(-1.0f);
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 	{
-		jtCamera->ChangeYaw(-1.0f);
+		jtCamera->ChangeRoll(1.0f);
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
@@ -69,6 +79,8 @@ void AppClass::ProcessKeyboard(void)
 	{
 		jtCamera->MoveVertical(0.1f);
 	}
+
+	jtCamera->rechargeFuel(0.1f);
 
 #pragma region Other Actions
 	ON_KEY_PRESS_RELEASE(Escape, NULL, PostMessage(m_pWindow->GetHandler(), WM_QUIT, NULL, NULL))
@@ -97,29 +109,32 @@ void AppClass::ProcessMouse(void)
 	float fAngleX = 0.0f;
 	float fAngleY = 0.0f;
 
+	//soften the mouse sensitivity
+	float soften = 0.2f;
+
 	if (MouseX < CenterX)
 	{
 		DeltaMouse = static_cast<float>(CenterX - MouseX);
-		fAngleY += DeltaMouse * a_fSpeed;
+		fAngleY += DeltaMouse * a_fSpeed * soften;
 	}
 	else if (MouseX > CenterX)
 	{
 		DeltaMouse = static_cast<float>(MouseX - CenterX);
-		fAngleY -= DeltaMouse * a_fSpeed;
+		fAngleY -= DeltaMouse * a_fSpeed * soften;
 	}
 
 	if (MouseY < CenterY)
 	{
 		DeltaMouse = static_cast<float>(CenterY - MouseY);
-		fAngleX -= DeltaMouse * a_fSpeed;
+		fAngleX -= DeltaMouse * a_fSpeed * soften;
 	}
 	else if (MouseY > CenterY)
 	{
 		DeltaMouse = static_cast<float>(MouseY - CenterY);
-		fAngleX += DeltaMouse * a_fSpeed;
+		fAngleX += DeltaMouse * a_fSpeed * soften;
 	}
 
 	//mouse control for pitch and roll (airplane)
 	jtCamera->ChangePitch(fAngleX);
-	jtCamera->ChangeRoll(-fAngleY);
+	jtCamera->ChangeYaw(fAngleY * 0.8);
 }
