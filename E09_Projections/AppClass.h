@@ -7,6 +7,10 @@ Date: 2015/09
 
 #include "RE\ReEngAppClass.h"
 #include <SFML\Graphics.hpp>
+//include our bounding box stuff
+#include "MyBoundingBoxClass.h"
+#include "BoundingObject.h"
+#include "BoundingObjectMngr.h"
 //#include <chrono>
 #include "Camera.h"
 
@@ -16,6 +20,14 @@ class AppClass : public ReEngAppClass
 {
 public:
 	typedef ReEngAppClass super;
+	BoundingObjectMngr* m_pBOMngr = nullptr;
+
+	BoundingObject* m_pBO1 = nullptr;
+	BoundingObject* m_pBO2 = nullptr;
+
+	vector3 m_v3O1 = vector3(-2.5f, 0.0f, 0.0f);
+	vector3 m_v3O2 = vector3(2.5f, 0.0f, 0.0f);
+	vector3 m_v3O3 = vector3(1.0f, 1.0f, 0.0f);
 
 	/* Constructor */
 	AppClass(HINSTANCE hInstance, LPWSTR lpCmdLine, int nCmdShow) : super(hInstance, lpCmdLine, nCmdShow) {}
