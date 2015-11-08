@@ -3,12 +3,13 @@
 Camera* Camera::m_pInstance = nullptr;
 glm::quat Camera::rotationQuat = glm::quat(glm::vec3(0.0f));
 
+
 Camera* Camera::Instance()
 {
 	if (!m_pInstance)
 	{
 		m_pInstance = new Camera;
-		rotationQuat = glm::quat(glm::vec3(0.0f));
+		rotationQuat = glm::quat(glm::vec3(0.0f));	
 	}
 	return m_pInstance;
 }
@@ -79,7 +80,7 @@ void Camera::ChangePitch(float fIncrement)
 		up = glm::normalize(qPitch * up);
 		target = position + forward;
 
-		std::cout << "PitchChanged" << std::endl;
+		//std::cout << "PitchChanged" << std::endl;
 	}
 	
 }
@@ -93,7 +94,7 @@ void Camera::ChangeRoll(float fIncrement)
 
 	if (fIncrement != 0.0f)
 	{
-		std::cout << "RollChanged" << std::endl;
+		//std::cout << "RollChanged" << std::endl;
 	}
 }
 
@@ -106,6 +107,24 @@ void Camera::ChangeYaw(float fIncrement)
 		right = glm::normalize(qYaw * right);
 		target = position + forward;
 
-		std::cout << "YawChanged" << std::endl;
+		//std::cout << "YawChanged" << std::endl;
 	}
+}
+
+
+//decrements fuel (used for slowing and boosting)
+void Camera::useFuel(float fAmount)
+{
+	fuel -= fAmount;
+}
+
+//increments fuel (to be called when not boosing or slowing)
+void Camera::rechargeFuel(float fAmount)
+{
+	//do not increment more than maximum
+	if (fuel >= 1000){
+		return;
+	}
+
+	fuel += fAmount;
 }
