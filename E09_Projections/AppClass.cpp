@@ -33,6 +33,8 @@ void AppClass::Update(void)
 	//Adds all loaded instance to the render list
 	m_pMeshMngr->AddInstanceToRenderList("ALL");
 
+	jtCamera->MoveForward(0.1f);
+
 	m_pCamera->SetView(jtCamera->GetView());
 	m_pCamera->SetProjection(jtCamera->GetProjection(0));
 }

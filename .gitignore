@@ -1,8 +1,19 @@
+# Specific files and folders
+_Binary/*D.exe
+_Binary/*D.cfg
+_Binary/01_Basics.cfg
+_Binary/01_BasicsD.cfg
+_Binary/ReEng_d.dll
+_Binary/Macross*.*
+Z_DELETE
+
 # Compiled Object files
 *.slo
 *.lo
 *.o
 
+# Visual Studio specifics
+*.suo
 
 # Precompiled Headers
 *.gch
@@ -23,3 +34,5 @@
 # Executables
 *.out
 *.app
+*.sdf
+*.opensdf

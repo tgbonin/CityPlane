@@ -52,12 +52,12 @@ void AppClass::ProcessKeyboard(void)
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	{
-		jtCamera->MoveSideways(0.1f);
+		jtCamera->ChangeYaw(1.0f);
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 	{
-		jtCamera->MoveSideways(-0.1f);
+		jtCamera->ChangeYaw(-1.0f);
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
@@ -119,6 +119,7 @@ void AppClass::ProcessMouse(void)
 		fAngleX += DeltaMouse * a_fSpeed;
 	}
 
+	//mouse control for pitch and roll (airplane)
 	jtCamera->ChangePitch(fAngleX);
-	jtCamera->ChangeYaw(fAngleY);
+	jtCamera->ChangeRoll(-fAngleY);
 }
