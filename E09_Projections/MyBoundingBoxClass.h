@@ -23,6 +23,8 @@ class MyBoundingBoxClass
 	vector3 m_v3HalfWidth = vector3(0.0f);//Will store half the size of all sides
 	vector3 m_v3HalfWidthG = vector3(0.0f);//Will store half the size of all sides
 
+	float m_fRadius = 0.0f; //Radius of the Bounding Object
+
 public:
 	/*
 	Method: MyBoundingBoxClass
@@ -110,6 +112,8 @@ public:
 	Output: vector3 -> HalfWidth Vector
 	*/
 	vector3 GetHalfWidthG(void);
+
+	bool MyBoundingBoxClass::SAT(MyBoundingBoxClass* const a_pOther);
 
 	/*
 	Method: IsColliding

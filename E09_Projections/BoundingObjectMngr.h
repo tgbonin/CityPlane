@@ -73,6 +73,21 @@ public:
 	*/
 	void CheckCollisions(void);
 
+	void DisplaySphere(int a_nIndex, vector3 a_v3Color);
+
+	void DisplayOriented(int a_nIndex, vector3 a_v3Color);
+
+	void DisplayReAlligned(String a_sName, vector3 a_v3Color);
+
+	void DisplayReAlligned(int a_nIndex, vector3 a_v3Color);
+
+	void Update(void);
+
+	std::vector<int> GetCollidingVector(String a_sIndex);
+
+	std::vector<int> GetCollidingVector(uint a_nIndex);
+
+	int GetIndex(String a_sIndex);
 
 private:
 	BoundingObjectMngr(){};

@@ -11,6 +11,7 @@ Date: 2015/09
 #include "MyBoundingBoxClass.h"
 #include "BoundingObject.h"
 #include "BoundingObjectMngr.h"
+#include "MyBoundingSphereClass.h"
 //#include <chrono>
 #include "Camera.h"
 
@@ -25,12 +26,14 @@ public:
 	BoundingObject* m_pBO1 = nullptr;
 	BoundingObject* m_pBO2 = nullptr;
 
+	MyBoundingSphereClass* m_pBS1 = nullptr;
+	MyBoundingSphereClass* m_pBS2 = nullptr;
+
 	vector3 m_v3O1 = vector3(-2.5f, 0.0f, 0.0f);
 	vector3 m_v3O2 = vector3(2.5f, 0.0f, 0.0f);
 	vector3 m_v3O3 = vector3(1.0f, 1.0f, 0.0f);
 
-	vector3 m_v3b01 = vector3(-20.0f, 0.0f, -20.0f);
-	vector3 m_v3b02 = vector3(-20.0f, 0.0f, 10.0f);
+	std::vector<vector3> buildings;
 
 	/* Constructor */
 	AppClass(HINSTANCE hInstance, LPWSTR lpCmdLine, int nCmdShow) : super(hInstance, lpCmdLine, nCmdShow) {}

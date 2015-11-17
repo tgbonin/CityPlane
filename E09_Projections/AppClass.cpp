@@ -19,6 +19,9 @@ void AppClass::InitVariables(void)
 	m_pMeshMngr->LoadModel("Buildings\\building1.obj", "TestBuilding1", false, glm::translate(50.0f, 0.0f, -50.0f));
 	m_pMeshMngr->LoadModel("Buildings\\building2.obj", "TestBuilding2", false, glm::translate(30.0f, 0.0f, -20.0f));
 
+	buildings.push_back(vector3(50.0f, 0.0f, -50.0f));
+	buildings.push_back(vector3(30.0f, 0.0f, -20.0f));
+
 	//Init the Bounding Object Manager and pass in the Mesh Manager 
 	m_pBOMngr = BoundingObjectMngr::Instance();
 	m_pBOMngr->InitMeshManager(m_pMeshMngr);
@@ -30,6 +33,10 @@ void AppClass::InitVariables(void)
 	m_pBOMngr->AddBoundingObject("TestBuilding1");
 	m_pBOMngr->AddBoundingObject("TestBuilding2");
 
+	// new Bounding Spheres
+	m_pBS1 = new MyBoundingSphereClass(m_pMeshMngr->GetVertices("Steve"));
+	m_pBS2 = new MyBoundingSphereClass(m_pMeshMngr->GetVertices("Creeper"));
+
 	//Set the visibility of the creeper's bounding box **used as a test for the method**
 	m_pBOMngr->SetBOVisibility("Creeper", true);
 
@@ -37,6 +44,7 @@ void AppClass::InitVariables(void)
 	jtCamera->SetPosition(vector3(0.0f, 50.0f, 30.0f));
 	jtCamera->SetTarget(vector3(0.0f, 0.0f, 0.0f));
 	jtCamera->SetUp(vector3(0.0f, 1.0f, 0.0f));
+
 }
 
 void AppClass::Update(void)
@@ -51,6 +59,10 @@ void AppClass::Update(void)
 	m_pMeshMngr->SetModelMatrix(glm::translate(m_v3O1) * ToMatrix4(m_qArcBall), "Steve");
 	m_pMeshMngr->SetModelMatrix(glm::translate(m_v3O2), "Creeper");
 
+	// SPHERES
+	m_pBS1->SetModelMatrix(m_pMeshMngr->GetModelMatrix("Steve"));
+	m_pBS2->SetModelMatrix(m_pMeshMngr->GetModelMatrix("Creeper"));
+
 	m_pMeshMngr->SetModelMatrix(glm::translate(m_v3b01), "TestBuilding1");
 	m_pMeshMngr->SetModelMatrix(glm::translate(m_v3b02), "TestBuilding2");
 
@@ -63,6 +75,14 @@ void AppClass::Update(void)
 
 	//Check the Collisions of all of the Bounding Objects
 	m_pBOMngr->CheckCollisions();
+
+	//Add a representation of the Spheres to the render list
+	vector3 v3Color = REWHITE;
+	if (m_pBS1->IsColliding(m_pBS2))
+		v3Color = RERED;
+
+	m_pMeshMngr->AddSphereToQueue(glm::translate(matrix4(IDENTITY), m_pBS1->GetCenter()) * glm::scale(vector3(m_pBS1->GetRadius()) * 2.0f), v3Color, WIRE);
+	m_pMeshMngr->AddSphereToQueue(glm::translate(matrix4(IDENTITY), m_pBS2->GetCenter()) * glm::scale(vector3(m_pBS2->GetRadius()) * 2.0f), v3Color, WIRE);
 
 	//Render Bounding Objects
 	// **Like with the Mesh Manager, use the keyword "ALL" to render all stored BO's,
