@@ -92,10 +92,10 @@ void BoundingObjectMngr::DisplaySphere(int a_nIndex, vector3 a_v3Color)
 				v3Color = RERED;
 		}
 
-		pMeshMngr->AddSphereToQueue(
+		m_pMeshMngr->AddSphereToQueue(
 			m_lObject[a_nIndex]->GetModelMatrix() *
-			glm::translate(IDENTITY_M4, m_lObject[a_nIndex]->GetCenterLocal()) *
-			glm::scale(vector3(m_lObject[a_nIndex]->GetRadius() * 2.0f)),
+			glm::translate(matrix4(1.0f), m_lObject[a_nIndex]->GetCenterLocal()) *
+			glm::scale(vector3(m_lObject[a_nIndex]->GetRadiusG() * 2.0f)),
 			v3Color,
 			WIRE);
 	}
@@ -120,10 +120,10 @@ void BoundingObjectMngr::DisplaySphere(int a_nIndex, vector3 a_v3Color)
 				else
 					v3Color = RERED;
 			}
-			pMeshMngr->AddSphereToQueue(
+			m_pMeshMngr->AddSphereToQueue(
 				m_lObject[nObject]->GetModelMatrix() *
-				glm::translate(IDENTITY_M4, m_lObject[nObject]->GetCenterLocal()) *
-				glm::scale(vector3(m_lObject[nObject]->GetRadius() * 2.0f)),
+				glm::translate(matrix4(1.0f), m_lObject[nObject]->GetCenterLocal()) *
+				glm::scale(vector3(m_lObject[nObject]->GetRadiusG() * 2.0f)),
 				v3Color,
 				WIRE);
 		}
@@ -157,9 +157,9 @@ void BoundingObjectMngr::DisplayOriented(int a_nIndex, vector3 a_v3Color)
 				v3Color = RERED;
 		}
 
-		pMeshMngr->AddCubeToQueue(
+		m_pMeshMngr->AddCubeToQueue(
 			m_lObject[a_nIndex]->GetModelMatrix() *
-			glm::translate(IDENTITY_M4, m_lObject[a_nIndex]->GetCenterLocal()) *
+			glm::translate(matrix4(1.0f), m_lObject[a_nIndex]->GetCenterLocal()) *
 			glm::scale(m_lObject[a_nIndex]->GetHalfWidth() * 2.0f),
 			v3Color,
 			WIRE);
@@ -185,9 +185,9 @@ void BoundingObjectMngr::DisplayOriented(int a_nIndex, vector3 a_v3Color)
 				else
 					v3Color = RERED;
 			}
-			pMeshMngr->AddCubeToQueue(
+			m_pMeshMngr->AddCubeToQueue(
 				m_lObject[nObject]->GetModelMatrix() *
-				glm::translate(IDENTITY_M4, m_lObject[nObject]->GetCenterLocal()) *
+				glm::translate(matrix4(1.0f), m_lObject[nObject]->GetCenterLocal()) *
 				glm::scale(m_lObject[nObject]->GetHalfWidth() * 2.0f),
 				v3Color,
 				WIRE);
@@ -227,7 +227,7 @@ void BoundingObjectMngr::DisplayReAlligned(int a_nIndex, vector3 a_v3Color)
 			else
 				v3Color = RERED;
 		}
-		pMeshMngr->AddCubeToQueue(
+		m_pMeshMngr->AddCubeToQueue(
 			glm::translate(m_lObject[a_nIndex]->GetCenterGlobal()) *
 			glm::scale(m_lObject[a_nIndex]->GetHalfWidthG() * 2.0f),
 			v3Color,
@@ -254,7 +254,7 @@ void BoundingObjectMngr::DisplayReAlligned(int a_nIndex, vector3 a_v3Color)
 				else
 					v3Color = RERED;
 			}
-			pMeshMngr->AddCubeToQueue(
+			m_pMeshMngr->AddCubeToQueue(
 				glm::translate(m_lObject[nObject]->GetCenterGlobal()) *
 				glm::scale(m_lObject[nObject]->GetHalfWidthG() * 2.0f),
 				v3Color,

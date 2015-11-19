@@ -13,74 +13,65 @@ void AppClass::ProcessKeyboard(void)
 			bool pressed = sf::Keyboard::isKeyPressed(sf::Keyboard::key);			\
 			if(pressed){											\
 				if(!bLast##key) pressed_action;}/*Just pressed? */\
-			else if(bLast##key) released_action;/*Just released?*/\
+						else if(bLast##key) released_action;/*Just released?*/\
 			bLast##key = pressed; } //remember the state
 #pragma endregion
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::F1))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 	{
-		jtCamera->ChangePitch(1.0f);
+		m_pPlayer->ChangePitch(1.0f);
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::F2))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 	{
-		jtCamera->ChangeRoll(1.0f);
+		m_pPlayer->ChangePitch(-1.0f);
+	}
+	
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+	{
+		m_pPlayer->ChangeRoll(-2.0f);
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::F3))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 	{
-		jtCamera->ChangeYaw(1.0f);
+		m_pPlayer->ChangeRoll(2.0f);
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::F4))
-	{
-	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::F5))
-	{
-	}
 
 	//boost
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 	{
-		if (jtCamera->fuel > 0.0f)
-		{
-			jtCamera->MoveForward(0.1f);
-			jtCamera->useFuel(1.0f);
-		}
+		m_pPlayer->MoveForward(0.1f);
 	}
 
 	//slow-down
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 	{
-		if (jtCamera->fuel > 0.0f)
-		{
-			jtCamera->MoveForward(-0.05f);
-			jtCamera->useFuel(1.0f);
-		}
+			m_pPlayer->MoveForward(-0.05f);
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	{
-		jtCamera->ChangeRoll(-1.0f);
+		m_pPlayer->ChangeRoll(-1.0f);
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 	{
-		jtCamera->ChangeRoll(1.0f);
+		m_pPlayer->ChangeRoll(1.0f);
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
 	{
-		jtCamera->MoveVertical(-0.1f);
+		m_pPlayer->MoveVertical(-0.1f);
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
 	{
-		jtCamera->MoveVertical(0.1f);
+		m_pPlayer->MoveVertical(0.1f);
 	}
 
-	jtCamera->rechargeFuel(0.1f);
+	//m_pPlayer->rechargeFuel(0.1f);
 
 #pragma region Other Actions
 	ON_KEY_PRESS_RELEASE(Escape, NULL, PostMessage(m_pWindow->GetHandler(), WM_QUIT, NULL, NULL))
@@ -135,6 +126,6 @@ void AppClass::ProcessMouse(void)
 	}
 
 	//mouse control for pitch and roll (airplane)
-	jtCamera->ChangePitch(fAngleX);
-	jtCamera->ChangeYaw(fAngleY * 0.8);
+	m_pPlayer->ChangePitch(fAngleX);
+	m_pPlayer->ChangeYaw(fAngleY * 0.8);
 }

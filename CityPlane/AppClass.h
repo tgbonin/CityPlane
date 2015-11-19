@@ -13,7 +13,7 @@ Date: 2015/09
 #include "BoundingObjectMngr.h"
 #include "MyBoundingSphereClass.h"
 //#include <chrono>
-#include "Camera.h"
+#include "Player.h"
 
 using namespace ReEng; //Using ReEng namespace to use all the classes in the dll
 
@@ -78,7 +78,7 @@ public:
 	*/
 	virtual void Release(void);
 
-	Camera* jtCamera;
+	Player* m_pPlayer;
 };
 
 #endif //__APPLICATION_H_

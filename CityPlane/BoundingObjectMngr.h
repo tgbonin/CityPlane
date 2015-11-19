@@ -18,10 +18,16 @@ class BoundingObjectMngr
 	//Vector containing all instances of Bounding Objects
 	std::vector<BoundingObject*> m_lBOList;
 
-	MeshManagerSingleton* m_pMeshMngr = nullptr;
-
 public:
 	static BoundingObjectMngr* Instance();
+
+	uint m_nObjectCount = 0; //number of AABB in the list
+	static BoundingObjectMngr* m_pInstance; // Singleton pointer
+	std::vector<BoundingObject*> m_lObject; //list of AABB
+	MeshManagerSingleton* m_pMeshMngr;//Mesh Manager Singleton
+	std::vector<std::vector<int>> m_llCollidingIndices; //List of list of colliding indices.
+	std::map<String, uint> m_mapIndex;//Map relating the mesh and the index
+
 
 	/*
 		InitMeshManager
@@ -93,6 +99,5 @@ private:
 	BoundingObjectMngr(){};
 	BoundingObjectMngr(BoundingObjectMngr const&);
 	BoundingObjectMngr& operator=(BoundingObjectMngr const&){};
-	static BoundingObjectMngr* m_pInstance;
 };
 
