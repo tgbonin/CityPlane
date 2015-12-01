@@ -87,15 +87,13 @@ void AppClass::ProcessKeyboard(void)
 	ON_KEY_PRESS_RELEASE(Return, NULL, bEnter = true);
 	if (bEnter)
 	{
-		m_pEntityMngr->ApplyForce(REAXISX * m_fForce, "Steve");
-		m_pEntityMngr->ApplyForce(REAXISX * -m_fForce, "Creeper");
+
 	}
 	bool bSpace = false;
 	ON_KEY_PRESS_RELEASE(Space, NULL, bSpace = true);
 	if (bSpace)
 	{
-		m_pEntityMngr->ApplyForce(REAXISY * m_fForce, "Steve");
-		m_pEntityMngr->ApplyForce(REAXISY * m_fForce, "Creeper");
+
 	}
 #pragma endregion
 

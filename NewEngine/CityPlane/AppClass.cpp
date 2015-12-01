@@ -48,6 +48,8 @@ void AppClass::InitVariables(void)
 	float CenterX = m_pSystem->GetWindowX() + m_pSystem->GetWindowWidth() / 2;
 	float CenterY = m_pSystem->GetWindowY() + m_pSystem->GetWindowHeight() / 2;
 	SetCursorPos(CenterX, CenterY);
+
+	clockIndex = m_pSystem->AddClock();
 }
 
 void AppClass::Update(void)
@@ -69,12 +71,23 @@ void AppClass::Update(void)
 	m_pEntityMngr->SetPosition(m_pPlayer->position, "PLAYER");
 	m_pEntityMngr->SetModelMatrix(m_pPlayer->GetMatrix(), "PLAYER");
 
+	m_pMeshMngr->AddPlaneToQueue(matrix4(1.0f) * glm::scale(vector3(500.0f, 1.0f, 500.0f)) * glm::rotate(90.0f, REAXISX), vector3(0.0f, (153.0f/255.0f), 0.0f));
+
+	float cameraDamp = 0.1f;
+	vector3 curPos = m_pCameraMngr->GetPosition();
+	vector3 wantPos = m_pPlayer->position - ((m_pPlayer->forward * 15.0f) + (-m_pPlayer->up * 3.0f));
+	vector3 diff = wantPos - curPos;
+
+	vector3 posFinal = curPos + (diff * cameraDamp);
+
 	//update the follow camera
 	m_pCameraMngr->SetPositionTargetAndView(
-		(m_pPlayer->position - ((m_pPlayer->forward * 10.0f) + (-m_pPlayer->up * 3.0f))),
+		posFinal,
 		m_pPlayer->position,
 		m_pPlayer->up
 	);
+
+	timePassed += m_pSystem->LapClock(clockIndex);
 
 	//Indicate the FPS
 	int nFPS = m_pSystem->GetFPS();
@@ -83,6 +96,8 @@ void AppClass::Update(void)
 	//Print info on the screen	
 	m_pMeshMngr->Print("FPS:");
 	m_pMeshMngr->Print(std::to_string(nFPS), RERED);
+	m_pMeshMngr->PrintLine("");
+	m_pMeshMngr->Print("Time: " + std::to_string((int)timePassed), REWHITE);
 }
 
 void AppClass::Display(void)
@@ -90,23 +105,23 @@ void AppClass::Display(void)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the window
 
 	//Render the grid based on the camera's mode:
-	switch (m_pCameraMngr->GetCameraMode())
-	{
-	default: //Perspective
-		m_pMeshMngr->AddGridToQueue(1.0f, REAXIS::XY); //renders the XY grid with a 100% scale
-		break;
-	case CAMERAMODE::CAMROTHOX:
-		m_pMeshMngr->AddGridToQueue(1.0f, REAXIS::YZ, RERED * 0.75f); //renders the YZ grid with a 100% scale
-		break;
-	case CAMERAMODE::CAMROTHOY:
-		m_pMeshMngr->AddGridToQueue(1.0f, REAXIS::XZ, REGREEN * 0.75f); //renders the XZ grid with a 100% scale
-		break;
-	case CAMERAMODE::CAMROTHOZ:
-		m_pMeshMngr->AddGridToQueue(1.0f, REAXIS::XY, REBLUE * 0.75f); //renders the XY grid with a 100% scale
-		break;
-	}
+	//switch (m_pCameraMngr->GetCameraMode())
+	//{
+	//default: //Perspective
+	//	m_pMeshMngr->AddGridToQueue(1.0f, REAXIS::XY); //renders the XY grid with a 100% scale
+	//	break;
+	//case CAMERAMODE::CAMROTHOX:
+	//	m_pMeshMngr->AddGridToQueue(1.0f, REAXIS::YZ, RERED * 0.75f); //renders the YZ grid with a 100% scale
+	//	break;
+	//case CAMERAMODE::CAMROTHOY:
+	//	m_pMeshMngr->AddGridToQueue(1.0f, REAXIS::XZ, REGREEN * 0.75f); //renders the XZ grid with a 100% scale
+	//	break;
+	//case CAMERAMODE::CAMROTHOZ:
+	//	m_pMeshMngr->AddGridToQueue(1.0f, REAXIS::XY, REBLUE * 0.75f); //renders the XY grid with a 100% scale
+	//	break;
+	//}
 
-	m_pEntityMngr->Display(ER_MESH | ER_OB); //Display all objects in Entity manager
+	m_pEntityMngr->Display(ER_MESH); //Display all objects in Entity manager
 	
 	m_pMeshMngr->Render(); //renders the render list
 
