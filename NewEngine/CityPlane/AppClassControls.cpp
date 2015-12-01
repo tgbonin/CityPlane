@@ -22,6 +22,13 @@ void AppClass::ProcessKeyboard(void)
 #pragma endregion
 
 #pragma region Camera Positioning
+	if (!(gamepad->RStick_InDeadzone()))
+	{
+		m_pPlayer->ChangePitch(1.0f * gamepad->RightStick_Y());
+		m_pPlayer->ChangeRoll(-2.0f * gamepad->RightStick_X());
+	}
+
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 	{
 		m_pPlayer->ChangePitch(1.0f);

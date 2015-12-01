@@ -10,6 +10,7 @@ Date: 2015/09
 #include "MyEntityManager.h"
 
 #include "Player.h"
+#include "Gamepad.h"
 
 using namespace ReEng; //Using ReEng namespace to use all the classes in the dll
 
@@ -19,6 +20,7 @@ class AppClass : public ReEngAppClass
 	MyEntityManager* m_pEntityMngr;
 	std::vector<vector3> buildings;
 	Player* m_pPlayer;
+	Gamepad* gamepad;
 
 public:
 	typedef ReEngAppClass super;

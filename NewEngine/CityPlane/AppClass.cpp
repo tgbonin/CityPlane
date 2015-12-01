@@ -26,6 +26,8 @@ void AppClass::InitVariables(void)
 
 	m_pEntityMngr = MyEntityManager::GetInstance();
 
+	gamepad = new Gamepad(1);
+
 
 	m_pPlayer->SetUp(vector3(0, 1, 0));
 	m_pPlayer->SetPosition(vector3(0.0f, 30.0f, 50.0f));
@@ -64,6 +66,8 @@ void AppClass::Update(void)
 	//First person camera movement
 	//if (m_bFPC == true)
 	//	CameraRotation();
+
+	gamepad->Update();
 	
 	m_pEntityMngr->Update();
 	m_pEntityMngr->SetPosition(m_pPlayer->position, "PLAYER");
