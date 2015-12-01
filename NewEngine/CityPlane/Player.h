@@ -13,7 +13,6 @@ public:
 	matrix4 GetProjection(bool bOrthographics);
 	matrix4 GetMatrix(void);
 	
-
 	void SetPosition(vector3 v3Position);
 	void SetTarget(vector3 v3Target);
 	void SetUp(vector3 v3Up);

@@ -29,10 +29,10 @@ class MyEntityClass
 
 	String m_sName = ""; // Name index
 
-	MyBOManager* m_pColliderManager = nullptr; //Collider manager
 	MeshManagerSingleton* m_pMeshManager = nullptr;//Mesh Manager
 
 public:
+	MyBOManager* m_pColliderManager = nullptr; //Collider manager
 	/*
 	USAGE: Constructor
 	ARGUMENTS:

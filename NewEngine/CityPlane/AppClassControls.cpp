@@ -21,59 +21,77 @@ void AppClass::ProcessKeyboard(void)
 	//	bModifier = true;
 #pragma endregion
 
+#pragma region Game State Buttons
+	if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) && state == GAME_START)
+	{
+		state = GAME_PLAY;
+	}
+
+	if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) && state == GAME_OVER)
+	{
+		state = GAME_PLAY;
+		m_pPlayer->SetPosition(vector3(0.0f, 30.0f, 50.0f));
+		m_pPlayer->SetTarget(vector3(0.0f, 0.0f, 1.0f));
+		m_pPlayer->SetUp(vector3(0.0f, 1.0f, 0.0f));
+	}
+#pragma endregion
+
 #pragma region Camera Positioning
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-	{
-		m_pPlayer->ChangePitch(1.0f);
-	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-	{
-		m_pPlayer->ChangePitch(-1.0f);
-	}
+	if (state == GAME_PLAY){
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-	{
-		m_pPlayer->ChangeRoll(-2.0f);
-	}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+		{
+			m_pPlayer->ChangePitch(1.0f);
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+		{
+			m_pPlayer->ChangePitch(-1.0f);
+		}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-	{
-		m_pPlayer->ChangeRoll(2.0f);
-	}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+		{
+			m_pPlayer->ChangeRoll(-2.0f);
+		}
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+		{
+			m_pPlayer->ChangeRoll(2.0f);
+		}
 
 
 
-	//boost
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-	{
-		m_pPlayer->MoveForward(0.1f);
-	}
+		//boost
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+		{
+			m_pPlayer->MoveForward(0.1f);
+		}
 
-	//slow-down
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-	{
-		m_pPlayer->MoveForward(-0.05f);
-	}
+		//slow-down
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+		{
+			m_pPlayer->MoveForward(-0.05f);
+		}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-	{
-		m_pPlayer->ChangeRoll(-1.0f);
-	}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+		{
+			m_pPlayer->ChangeRoll(-1.0f);
+		}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-	{
-		m_pPlayer->ChangeRoll(1.0f);
-	}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+		{
+			m_pPlayer->ChangeRoll(1.0f);
+		}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
-	{
-		m_pPlayer->MoveVertical(-0.1f);
-	}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+		{
+			m_pPlayer->MoveVertical(-0.1f);
+		}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
-	{
-		m_pPlayer->MoveVertical(0.1f);
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
+		{
+			m_pPlayer->MoveVertical(0.1f);
+		}
 	}
 #pragma endregion
 
@@ -87,15 +105,13 @@ void AppClass::ProcessKeyboard(void)
 	ON_KEY_PRESS_RELEASE(Return, NULL, bEnter = true);
 	if (bEnter)
 	{
-		m_pEntityMngr->ApplyForce(REAXISX * m_fForce, "Steve");
-		m_pEntityMngr->ApplyForce(REAXISX * -m_fForce, "Creeper");
+
 	}
 	bool bSpace = false;
 	ON_KEY_PRESS_RELEASE(Space, NULL, bSpace = true);
 	if (bSpace)
 	{
-		m_pEntityMngr->ApplyForce(REAXISY * m_fForce, "Steve");
-		m_pEntityMngr->ApplyForce(REAXISY * m_fForce, "Creeper");
+
 	}
 #pragma endregion
 
