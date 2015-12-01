@@ -17,14 +17,31 @@ void AppClass::InitVariables(void)
 
 	m_pMeshMngr->LoadModel("Buildings\\building1.obj", "TestBuilding1");
 	m_pMeshMngr->LoadModel("Buildings\\building2.obj", "TestBuilding2");
+	m_pMeshMngr->LoadModel("Buildings\\building1.obj", "TestBuilding3");
+	m_pMeshMngr->LoadModel("Buildings\\building2.obj", "TestBuilding4");
+	m_pMeshMngr->LoadModel("Buildings\\building1.obj", "TestBuilding5");
+	m_pMeshMngr->LoadModel("Buildings\\building2.obj", "TestBuilding6");
+	m_pMeshMngr->LoadModel("Buildings\\building1.obj", "TestBuilding7");
+	m_pMeshMngr->LoadModel("Buildings\\building2.obj", "TestBuilding8");
 
 	m_pMeshMngr->LoadModel("\\biplane.obj", "PLAYER", false);
 
 	buildings.push_back(vector3(50.0f, 0.0f, -50.0f));
 	buildings.push_back(vector3(30.0f, 0.0f, -20.0f));
 
+	buildings.push_back(vector3(100.0f, 0.0f, -50.0f));
+	buildings.push_back(vector3(80.0f, 0.0f, -20.0f));
+
+	buildings.push_back(vector3(0.0f, 0.0f, -50.0f));
+	buildings.push_back(vector3(30.0f, 0.0f, -700.0f));
+
+	buildings.push_back(vector3(-500.0f, 0.0f, -100.0f));
+	buildings.push_back(vector3(0.0f, 0.0f, 80.0f));
+
 
 	m_pEntityMngr = MyEntityManager::GetInstance();
+
+	gamepad = new Gamepad(1);
 
 
 	m_pPlayer->SetUp(vector3(0, 1, 0));
@@ -39,6 +56,31 @@ void AppClass::InitVariables(void)
 	m_pEntityMngr->AddEntity("TestBuilding2", INT_MAX);
 	m_pEntityMngr->SetPosition(buildings[1], "TestBuilding2");
 	m_pEntityMngr->SetGravityAffected(false, "TestBuilding2");
+
+	m_pEntityMngr->AddEntity("TestBuilding3", INT_MAX);
+	m_pEntityMngr->SetPosition(buildings[2], "TestBuilding3");
+	m_pEntityMngr->SetGravityAffected(false, "TestBuilding3");
+
+	m_pEntityMngr->AddEntity("TestBuilding4", INT_MAX);
+	m_pEntityMngr->SetPosition(buildings[3], "TestBuilding4");
+	m_pEntityMngr->SetGravityAffected(false, "TestBuilding4");
+
+	m_pEntityMngr->AddEntity("TestBuilding5", INT_MAX);
+	m_pEntityMngr->SetPosition(buildings[4], "TestBuilding5");
+	m_pEntityMngr->SetGravityAffected(false, "TestBuilding5");
+
+	m_pEntityMngr->AddEntity("TestBuilding6", INT_MAX);
+	m_pEntityMngr->SetPosition(buildings[5], "TestBuilding6");
+	m_pEntityMngr->SetGravityAffected(false, "TestBuilding6");
+
+	m_pEntityMngr->AddEntity("TestBuilding7", INT_MAX);
+	m_pEntityMngr->SetPosition(buildings[6], "TestBuilding7");
+	m_pEntityMngr->SetGravityAffected(false, "TestBuilding7");
+
+	m_pEntityMngr->AddEntity("TestBuilding8", INT_MAX);
+	m_pEntityMngr->SetPosition(buildings[7], "TestBuilding8");
+	m_pEntityMngr->SetGravityAffected(false, "TestBuilding8");
+
 
 	m_pEntityMngr->AddEntity("PLAYER", 100.0f);
 	m_pEntityMngr->SetPosition(m_pPlayer->position, "PLAYER");
@@ -61,6 +103,7 @@ void AppClass::Update(void)
 		m_pMeshMngr->Print("Press 'Enter' Or 'Space' To Start The Game");
 	}
 	else if (state == GAME_PLAY){
+		gamepad->Update();
 		if (m_pPlayer->position.y < 0){
 			state = GAME_OVER;
 			return;
@@ -106,7 +149,7 @@ void AppClass::Update(void)
 		m_pMeshMngr->Print(std::to_string(nFPS), RERED);
 		m_pMeshMngr->PrintLine("");
 		m_pMeshMngr->Print("Time: " + std::to_string((int)timePassed), REWHITE);
-		std::vector<MyBOClass*> BO = m_pEntityMngr->GetEntity("PLAYER")->m_pColliderManager->m_lObject;
+		/*std::vector<MyBOClass*> BO = m_pEntityMngr->GetEntity("PLAYER")->m_pColliderManager->m_lObject;
 		for (int i = 0; i < BO.size(); i++)
 		{
 			if (i == BO.size() - 1){
@@ -119,14 +162,13 @@ void AppClass::Update(void)
 				state == GAME_OVER;
 				return;
 			}
-		}
+		}*/
 	}
 	else { // state == GAME_OVER
 		m_pMeshMngr->Print("You Lost! Your Final Score Was 0");
 		m_pMeshMngr->PrintLine("");
 		m_pMeshMngr->Print("Press 'Enter' Or 'Space' To Play Again");
 	}
-
 	
 }
 

@@ -10,6 +10,7 @@ Date: 2015/09
 #include "MyEntityManager.h"
 
 #include "Player.h"
+#include "Gamepad.h"
 
 using namespace ReEng; //Using ReEng namespace to use all the classes in the dll
 
@@ -22,6 +23,7 @@ class AppClass : public ReEngAppClass
 	Player* m_pPlayer;
 	enum GameState { GAME_START, GAME_PLAY, GAME_OVER };
 	GameState state;
+	Gamepad* gamepad;
 
 public:
 	typedef ReEngAppClass super;
