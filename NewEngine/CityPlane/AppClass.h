@@ -19,6 +19,8 @@ class AppClass : public ReEngAppClass
 	MyEntityManager* m_pEntityMngr;
 	std::vector<vector3> buildings;
 	Player* m_pPlayer;
+	enum GameState { GAME_START, GAME_PLAY, GAME_OVER };
+	GameState state;
 
 public:
 	typedef ReEngAppClass super;

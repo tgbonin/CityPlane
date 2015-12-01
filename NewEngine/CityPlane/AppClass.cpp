@@ -48,6 +48,8 @@ void AppClass::InitVariables(void)
 	float CenterX = m_pSystem->GetWindowX() + m_pSystem->GetWindowWidth() / 2;
 	float CenterY = m_pSystem->GetWindowY() + m_pSystem->GetWindowHeight() / 2;
 	SetCursorPos(CenterX, CenterY);
+
+	state = GAME_START;
 }
 
 void AppClass::Update(void)
@@ -58,23 +60,29 @@ void AppClass::Update(void)
 	//Update the mesh manager's time without updating for collision detection
 	m_pMeshMngr->Update(false);
 
-	//update the player
-	m_pPlayer->Update();	
+	if (state == GAME_START){
 
-	//First person camera movement
-	//if (m_bFPC == true)
-	//	CameraRotation();
-	
-	m_pEntityMngr->Update();
-	m_pEntityMngr->SetPosition(m_pPlayer->position, "PLAYER");
-	m_pEntityMngr->SetModelMatrix(m_pPlayer->GetMatrix(), "PLAYER");
 
-	//update the follow camera
-	m_pCameraMngr->SetPositionTargetAndView(
-		(m_pPlayer->position - ((m_pPlayer->forward * 10.0f) + (-m_pPlayer->up * 3.0f))),
-		m_pPlayer->position,
-		m_pPlayer->up
-	);
+	}
+	else if (state == GAME_PLAY){
+		//update the player
+		m_pPlayer->Update();
+
+		//First person camera movement
+		//if (m_bFPC == true)
+		//	CameraRotation();
+
+		m_pEntityMngr->Update();
+		m_pEntityMngr->SetPosition(m_pPlayer->position, "PLAYER");
+		m_pEntityMngr->SetModelMatrix(m_pPlayer->GetMatrix(), "PLAYER");
+
+		//update the follow camera
+		m_pCameraMngr->SetPositionTargetAndView(
+			(m_pPlayer->position - ((m_pPlayer->forward * 10.0f) + (-m_pPlayer->up * 3.0f))),
+			m_pPlayer->position,
+			m_pPlayer->up
+			);
+	}
 
 	//Indicate the FPS
 	int nFPS = m_pSystem->GetFPS();
