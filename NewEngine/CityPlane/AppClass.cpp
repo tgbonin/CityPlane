@@ -97,8 +97,6 @@ void AppClass::InitVariables(void)
 
 void AppClass::Update(void)
 {
-
-
 	if (state == GAME_START){
 		m_pMeshMngr->Print("Press 'Enter' Or 'Space' To Start The Game");
 	}
@@ -115,9 +113,7 @@ void AppClass::Update(void)
 		//Update the mesh manager's time without updating for collision detection
 		m_pMeshMngr->Update(false);
 
-		//First person camera movement
-		//if (m_bFPC == true)
-		//	CameraRotation();
+		m_pPlayer->Update();
 
 		m_pEntityMngr->Update();
 		m_pEntityMngr->SetPosition(m_pPlayer->position, "PLAYER");

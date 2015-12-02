@@ -46,22 +46,22 @@ void AppClass::ProcessKeyboard(void)
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 	{
-		m_pPlayer->ChangePitch(1.0f);
+		m_pPlayer->ChangePitch(0.5f);
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 	{
-		m_pPlayer->ChangePitch(-1.0f);
+		m_pPlayer->ChangePitch(-0.5f);
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 	{
-		m_pPlayer->ChangeRoll(-2.0f);
+		m_pPlayer->ChangeRoll(-1.0f);
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 	{
-		m_pPlayer->ChangeRoll(2.0f);
+		m_pPlayer->ChangeRoll(1.0f);
 	}
 
 
