@@ -15,6 +15,7 @@ class MyEntityManager
 	std::vector<MyEntityClass*> m_lEntity; //list of elements
 	std::map<String, uint> m_map;//Map relating the mesh and the index
 	MyBOManager* m_pColliderManager = nullptr; //Collider manager
+	std::vector<MyEntityClass> targets; //vector of target obejcts
 public:
 	/*
 	USAGE: returns the singleton pointer

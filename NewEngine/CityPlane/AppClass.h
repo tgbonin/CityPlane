@@ -17,9 +17,9 @@ using namespace ReEng; //Using ReEng namespace to use all the classes in the dll
 class AppClass : public ReEngAppClass
 {
 	int clockIndex;
+	int numTargets = 0;
 	float timePassed = 0;
 	MyEntityManager* m_pEntityMngr;
-	std::vector<vector3> targets;
 	Player* m_pPlayer;
 	enum GameState { GAME_START, GAME_PLAY, GAME_OVER };
 	GameState state;
