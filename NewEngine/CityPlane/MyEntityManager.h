@@ -141,6 +141,8 @@ public:
 	*/
 	void Display(int a_nRenderMode = ER_MESH);
 
+	bool gameOver = false;
+
 private:
 	/*
 	USAGE: Constructor

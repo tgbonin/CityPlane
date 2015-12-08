@@ -51,7 +51,7 @@ void AppClass::InitVariables(void)
 				pos.y = rand() % 30 + 10;
 				targets.push_back(pos);
 
-				m_pEntityMngr->AddEntity(name, "building", INT_MAX);
+				m_pEntityMngr->AddEntity(name, "target", INT_MAX);
 				m_pEntityMngr->SetPosition(pos, name);
 				m_pEntityMngr->SetGravityAffected(false, name);
 
@@ -97,11 +97,12 @@ void AppClass::Update(void)
 	}
 	else if (state == GAME_PLAY){
 		gamepad->Update();
-		if (m_pPlayer->position.y < 0){
+		if (m_pPlayer->position.y < 0 || m_pEntityMngr->gameOver){
 			state = GAME_OVER;
+			m_pEntityMngr->gameOver = false;
 			return;
 		}
-		
+
 		//Update the system's time
 		m_pSystem->UpdateTime();
 
@@ -155,6 +156,8 @@ void AppClass::Update(void)
 		}*/
 	}
 	else { // state == GAME_OVER
+		m_pEntityMngr->gameOver = false;
+		timePassed = 0.0;
 		m_pMeshMngr->Print("You Lost! Your Final Score Was 0");
 		m_pMeshMngr->PrintLine("");
 		m_pMeshMngr->Print("Press 'Enter' Or 'Space' To Play Again");
