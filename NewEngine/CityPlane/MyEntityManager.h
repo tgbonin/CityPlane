@@ -15,6 +15,7 @@ class MyEntityManager
 	std::vector<MyEntityClass*> m_lEntity; //list of elements
 	std::map<String, uint> m_map;//Map relating the mesh and the index
 	MyBOManager* m_pColliderManager = nullptr; //Collider manager
+	int numTargets;
 public:
 	/*
 	USAGE: returns the singleton pointer
@@ -139,7 +140,11 @@ public:
 	ie ( ER_MESH | ER_RB ) will render the mesh and the Realligned Box
 	OUTPUT: ---
 	*/
+	int GetNumTargets(void);
+
 	void Display(int a_nRenderMode = ER_MESH);
+
+	bool gameOver = false;
 
 private:
 	/*

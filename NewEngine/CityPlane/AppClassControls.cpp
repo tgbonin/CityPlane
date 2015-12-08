@@ -25,14 +25,15 @@ void AppClass::ProcessKeyboard(void)
 	if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) && state == GAME_START)
 	{
 		state = GAME_PLAY;
+
+		m_pPlayer->SetPosition(vector3(120.0f, 30.0f, 50.0f));
+		m_pPlayer->SetTarget(vector3(0.0f, 30.0f, 1.0f));
+		m_pPlayer->SetUp(vector3(0.0f, 1.0f, 0.0f));
 	}
 
 	if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) && state == GAME_OVER)
 	{
 		state = GAME_PLAY;
-		m_pPlayer->SetPosition(vector3(0.0f, 30.0f, 50.0f));
-		m_pPlayer->SetTarget(vector3(0.0f, 0.0f, 1.0f));
-		m_pPlayer->SetUp(vector3(0.0f, 1.0f, 0.0f));
 	}
 #pragma endregion
 

@@ -19,6 +19,8 @@ void AppClass::InitVariables(void)
 
 	gamepad = new Gamepad(1);
 
+
+	m_pPlayer->SetUp(vector3(0, 1, 0));
 	m_pPlayer->SetPosition(vector3(0.0f, 30.0f, 50.0f));
 	m_pPlayer->SetTarget(vector3(0.0f, 0.0f, 1.0f));
 	m_pPlayer->SetUp(vector3(0.0f, 1.0f, 0.0f));
@@ -48,15 +50,17 @@ void AppClass::InitVariables(void)
 
 				pos.y = rand() % 30 + 10;
 
-				m_pEntityMngr->AddEntity(name, "target", (float)INT_MAX);
+				m_pEntityMngr->AddEntity(name, "target", INT_MAX);
 				m_pEntityMngr->SetPosition(pos, name);
 				m_pEntityMngr->SetGravityAffected(false, name);
+
+				numTargets++;
 
 				break;
 			case 1:
 				m_pMeshMngr->LoadModel("Buildings\\building1.obj", name);
 
-				m_pEntityMngr->AddEntity(name, "building", (float)INT_MAX);
+				m_pEntityMngr->AddEntity(name, "building",INT_MAX);
 				m_pEntityMngr->SetPosition(pos, name);
 				m_pEntityMngr->SetGravityAffected(false, name);
 
@@ -64,7 +68,7 @@ void AppClass::InitVariables(void)
 			case 2:
 				m_pMeshMngr->LoadModel("Buildings\\building2.obj", name);
 
-				m_pEntityMngr->AddEntity(name, "building", (float)INT_MAX);
+				m_pEntityMngr->AddEntity(name, "building",INT_MAX);
 				m_pEntityMngr->SetPosition(pos, name);
 				m_pEntityMngr->SetGravityAffected(false, name);
 
@@ -78,13 +82,13 @@ void AppClass::InitVariables(void)
 	m_pEntityMngr->SetPosition(m_pPlayer->position, "PLAYER");
 	m_pEntityMngr->SetGravityAffected(false, "PLAYER");
 
-	int CenterX = m_pSystem->GetWindowX() + m_pSystem->GetWindowWidth() / 2;
-	int CenterY = m_pSystem->GetWindowY() + m_pSystem->GetWindowHeight() / 2;
+
+	float CenterX = m_pSystem->GetWindowX() + m_pSystem->GetWindowWidth() / 2;
+	float CenterY = m_pSystem->GetWindowY() + m_pSystem->GetWindowHeight() / 2;
 	SetCursorPos(CenterX, CenterY);
 
 	state = GAME_START;
 	clockIndex = m_pSystem->AddClock();
-	m_pEntityMngr->AddEntity("BULLET", "bullet", 1.0f);
 }
 
 void AppClass::Update(void)
@@ -124,7 +128,13 @@ void AppClass::Update(void)
 			m_pEntityMngr->gameOver = false;
 			return;
 		}
+<<<<<<< HEAD
+		
+=======
 
+		//Update the system's time
+		m_pSystem->UpdateTime();
+>>>>>>> 8429cb6dbf15fef265343ed641b07bfbe5041f5b
 
 		//Update the mesh manager's time without updating for collision detection
 		m_pMeshMngr->Update(false);
@@ -134,13 +144,6 @@ void AppClass::Update(void)
 		m_pEntityMngr->Update();
 		m_pEntityMngr->SetPosition(m_pPlayer->position, "PLAYER");
 		m_pEntityMngr->SetModelMatrix(m_pPlayer->GetMatrix(), "PLAYER");
-
-		for (int i = 0; i < m_pPlayer->m_bullets.size(); i++)
-		{
-			PlaneBullet* pb = m_pPlayer->m_bullets[i];
-			m_pEntityMngr->SetPosition(pb->position, "BULLET");
-			m_pMeshMngr->AddSphereToQueue(glm::translate(pb->position)*glm::scale(vector3(0.5f)), REBLACK, SOLID);
-		}
 
 
 		float cameraDamp = 0.1f;
@@ -158,7 +161,6 @@ void AppClass::Update(void)
 			);
 		timePassed += m_pSystem->LapClock(clockIndex);
 		
-		m_pPlayer->currentTime = timePassed;
 		//Indicate the FPS
 		int nFPS = m_pSystem->GetFPS();
 		//print info into the console
@@ -169,16 +171,21 @@ void AppClass::Update(void)
 		m_pMeshMngr->PrintLine("");
 		m_pMeshMngr->Print("Time: " + std::to_string((int)timePassed), REWHITE);
 		m_pMeshMngr->PrintLine("");
-		m_pMeshMngr->Print("Targets left: " + std::to_string(m_pEntityMngr->GetNumTargets()) , REWHITE);
+		m_pMeshMngr->Print("Targets left: " + std::to_string(numTargets) , REWHITE);
 
-		if (m_pEntityMngr->GetNumTargets() == 0) state = GAME_OVER;
+		if (numTargets == 0) state = GAME_OVER;
 	}
 	else { // state == GAME_OVER
-		m_pEntityMngr->gameOver = false;
-		m_pMeshMngr->PrintLine("Game Over! Your Final Score Was " + std::to_string(10 - m_pEntityMngr->GetNumTargets()) + " / 10 targets");
+<<<<<<< HEAD
+		m_pMeshMngr->PrintLine("Game Over! Your Final Score Was " + std::to_string(10 - numTargets) + " / 10 targets");
 		m_pMeshMngr->PrintLine("and you finished in " + std::to_string((int)timePassed) + " seconds!");
+=======
+		m_pEntityMngr->gameOver = false;
+		timePassed = 0.0;
+		m_pMeshMngr->Print("You Lost! Your Final Score Was 0");
+>>>>>>> 8429cb6dbf15fef265343ed641b07bfbe5041f5b
 		m_pMeshMngr->PrintLine("");
-		m_pMeshMngr->Print("Press 'Escape' to exit the game");
+		m_pMeshMngr->Print("Press 'Enter' Or 'Space' To Play Again");
 	}
 	
 }
