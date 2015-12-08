@@ -19,8 +19,6 @@ void AppClass::InitVariables(void)
 
 	gamepad = new Gamepad(1);
 
-
-	m_pPlayer->SetUp(vector3(0, 1, 0));
 	m_pPlayer->SetPosition(vector3(0.0f, 30.0f, 50.0f));
 	m_pPlayer->SetTarget(vector3(0.0f, 0.0f, 1.0f));
 	m_pPlayer->SetUp(vector3(0.0f, 1.0f, 0.0f));
@@ -50,17 +48,15 @@ void AppClass::InitVariables(void)
 
 				pos.y = rand() % 30 + 10;
 
-				m_pEntityMngr->AddEntity(name, "target", INT_MAX);
+				m_pEntityMngr->AddEntity(name, "target", (float)INT_MAX);
 				m_pEntityMngr->SetPosition(pos, name);
 				m_pEntityMngr->SetGravityAffected(false, name);
-
-				numTargets++;
 
 				break;
 			case 1:
 				m_pMeshMngr->LoadModel("Buildings\\building1.obj", name);
 
-				m_pEntityMngr->AddEntity(name, "building",INT_MAX);
+				m_pEntityMngr->AddEntity(name, "building", (float)INT_MAX);
 				m_pEntityMngr->SetPosition(pos, name);
 				m_pEntityMngr->SetGravityAffected(false, name);
 
@@ -68,7 +64,7 @@ void AppClass::InitVariables(void)
 			case 2:
 				m_pMeshMngr->LoadModel("Buildings\\building2.obj", name);
 
-				m_pEntityMngr->AddEntity(name, "building",INT_MAX);
+				m_pEntityMngr->AddEntity(name, "building", (float)INT_MAX);
 				m_pEntityMngr->SetPosition(pos, name);
 				m_pEntityMngr->SetGravityAffected(false, name);
 
@@ -83,8 +79,8 @@ void AppClass::InitVariables(void)
 	m_pEntityMngr->SetGravityAffected(false, "PLAYER");
 
 
-	float CenterX = m_pSystem->GetWindowX() + m_pSystem->GetWindowWidth() / 2;
-	float CenterY = m_pSystem->GetWindowY() + m_pSystem->GetWindowHeight() / 2;
+	int CenterX = m_pSystem->GetWindowX() + m_pSystem->GetWindowWidth() / 2;
+	int CenterY = m_pSystem->GetWindowY() + m_pSystem->GetWindowHeight() / 2;
 	SetCursorPos(CenterX, CenterY);
 
 	state = GAME_START;
@@ -165,16 +161,16 @@ void AppClass::Update(void)
 		m_pMeshMngr->PrintLine("");
 		m_pMeshMngr->Print("Time: " + std::to_string((int)timePassed), REWHITE);
 		m_pMeshMngr->PrintLine("");
-		m_pMeshMngr->Print("Targets left: " + std::to_string(numTargets) , REWHITE);
+		m_pMeshMngr->Print("Targets left: " + std::to_string(m_pEntityMngr->GetNumTargets()) , REWHITE);
 
-		if (numTargets == 0) state = GAME_OVER;
+		if (m_pEntityMngr->GetNumTargets() == 0) state = GAME_OVER;
 	}
 	else { // state == GAME_OVER
 		m_pEntityMngr->gameOver = false;
-		m_pMeshMngr->PrintLine("Game Over! Your Final Score Was " + std::to_string(10 - numTargets) + " / 10 targets");
+		m_pMeshMngr->PrintLine("Game Over! Your Final Score Was " + std::to_string(10 - m_pEntityMngr->GetNumTargets()) + " / 10 targets");
 		m_pMeshMngr->PrintLine("and you finished in " + std::to_string((int)timePassed) + " seconds!");
 		m_pMeshMngr->PrintLine("");
-		m_pMeshMngr->Print("Press 'Enter' Or 'Space' To Play Again");
+		m_pMeshMngr->Print("Press 'Escape' to exit the game");
 	}
 	
 }

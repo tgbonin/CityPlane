@@ -4,6 +4,7 @@ MyEntityManager* MyEntityManager::m_pInstance = nullptr;
 void MyEntityManager::Init(void)
 {
 	m_nEntityCount = 0;
+	numTargets = 10;
 	gameOver = false;
 	m_pColliderManager = MyBOManager::GetInstance();
 }
@@ -65,6 +66,7 @@ MyEntityClass* MyEntityManager::GetEntity(int a_nIndex)
 	return m_lEntity[a_nIndex];//return the entry
 }
 int MyEntityManager::GetEntityCount(void) { return m_nEntityCount; }
+int MyEntityManager::GetNumTargets(void) { return numTargets; }
 int MyEntityManager::GetIndex(String a_sIndex)
 {
 	//Find the related index
@@ -177,6 +179,7 @@ void MyEntityManager::Update(void)
 				}
 				if ((m_lEntity[nEntity]->GetTag() == "player") && (m_lEntity[nIndex]->GetTag() == "target"))
 				{
+					numTargets--;
 					m_lEntity[nIndex]->~MyEntityClass();
 					nCollidingEntity--;
 				}
