@@ -137,6 +137,20 @@ void Player::rechargeFuel(float fAmount)
 	fuel += fAmount;
 }
 
+void Player::fireBullet(void){
+	PlaneBullet* pb = new PlaneBullet(position + forward*3.0f, forward);
+	m_bullets.push_back(pb);
+}
+
+
 void Player::Update(void){
 	MoveForward(0.3f);
+	for (int i = 0; i < m_bullets.size(); i++)
+	{
+		PlaneBullet* b = m_bullets[i];
+		b->Update();
+		if (b->distanceTraveled > 250.0f){
+			m_bullets.erase(m_bullets.begin()+i);
+		}
+	}
 }

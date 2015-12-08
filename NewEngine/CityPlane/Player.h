@@ -1,6 +1,7 @@
 #pragma once
 
 #include "RE\ReEngAppClass.h"
+#include "PlaneBullet.h"
 
 class Player
 {
@@ -8,6 +9,10 @@ public:
 	static Player* Instance();
 	static glm::quat rotationQuat;
 	float fuel;
+	float timeLastFired = 0.0f;
+	float currentTime = 0.0f;
+
+	std::vector <PlaneBullet*> m_bullets;
 
 	matrix4 GetView(void);
 	matrix4 GetProjection(bool bOrthographics);
@@ -27,6 +32,8 @@ public:
 
 	void useFuel(float fAmount);
 	void rechargeFuel(float fAmount);
+
+	void fireBullet(void);
 
 	void Update(void);
 

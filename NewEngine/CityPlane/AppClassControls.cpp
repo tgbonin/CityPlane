@@ -121,6 +121,13 @@ void AppClass::ProcessKeyboard(void)
 		{
 			m_pPlayer->MoveVertical(0.1f);
 		}
+
+		//Fire
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && m_pPlayer->currentTime - m_pPlayer->timeLastFired > 1.5f){
+			m_pPlayer->fireBullet();
+			m_pPlayer->timeLastFired = m_pPlayer->currentTime;
+		}
+
 	}
 #pragma endregion
 
