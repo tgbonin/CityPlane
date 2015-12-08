@@ -16,6 +16,7 @@ void MyEntityClass::Init(void)
 	m_fMaxVelocity = 1.0f;
 
 	m_sName = "";
+	m_sTag = "";
 
 	m_pColliderManager = MyBOManager::GetInstance();
 	m_pMeshManager = MeshManagerSingleton::GetInstance();
@@ -44,11 +45,12 @@ void MyEntityClass::Release(void)
 	//deallocate the singletons
 }
 // The rule of 3
-MyEntityClass::MyEntityClass(String a_sName, float a_fMass)
+MyEntityClass::MyEntityClass(String a_sName, String a_sTag, float a_fMass)
 {
 	//Create a new object based on the name
 	Init();//initialize members
 	m_sName = a_sName;//set the name
+	m_sTag = a_sTag; //set the tag
 	m_fMass = a_fMass;
 	std::vector<vector3> list = m_pMeshManager->GetVertexList(m_sName);//Get the list of verts
 	m_pColliderManager->AddObject(list, m_sName);//Construct a Bounding Object
@@ -67,6 +69,7 @@ MyEntityClass::MyEntityClass(MyEntityClass const& other)
 	m_fFriction = other.m_fFriction;
 	m_fMaxVelocity = other.m_fMaxVelocity;
 	m_sName = other.m_sName;
+	m_sTag = other.m_sTag;
 
 	m_pColliderManager = other.m_pColliderManager;
 	m_pMeshManager = other.m_pMeshManager;
@@ -108,6 +111,7 @@ void MyEntityClass::SetModelMatrix(matrix4 mMatrix){
 }
 float MyEntityClass::GetMass(void) { return m_fMass; }
 String MyEntityClass::GetName(void) { return m_sName; }
+String MyEntityClass::GetTag(void) { return m_sTag; }
 vector3 MyEntityClass::GetLastPosition(void) { return m_v3PositionPrevious; }
 vector3 MyEntityClass::GetPosition(void) { return m_v3Position; }
 vector3 MyEntityClass::GetForce(void) { return m_v3Force; }

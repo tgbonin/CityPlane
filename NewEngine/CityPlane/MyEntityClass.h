@@ -28,6 +28,7 @@ class MyEntityClass
 	float m_fMaxVelocity = 1.0f; //Limit of the acceleration of the entity
 
 	String m_sName = ""; // Name index
+	String m_sTag = ""; //Tag to be used for collisions USE CONVENTION ALL LOWERCASE
 
 	MeshManagerSingleton* m_pMeshManager = nullptr;//Mesh Manager
 
@@ -40,7 +41,7 @@ public:
 	--- float a_fMass -> Mass of the Entity
 	OUTPUT: class object
 	*/
-	MyEntityClass(String a_sName, float a_fMass);
+	MyEntityClass(String a_sName, String a_sTag, float a_fMass);
 	/*
 	USAGE: Constructor
 	ARGUMENTS: class object
@@ -185,6 +186,7 @@ public:
 	OUTPUT: String -> name of entity
 	*/
 	String GetName(void);
+	String GetTag(void);
 
 protected:
 	/*

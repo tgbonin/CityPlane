@@ -4,6 +4,7 @@ MyEntityManager* MyEntityManager::m_pInstance = nullptr;
 void MyEntityManager::Init(void)
 {
 	m_nEntityCount = 0;
+	gameOver = false;
 	m_pColliderManager = MyBOManager::GetInstance();
 }
 void MyEntityManager::Release(void)
@@ -37,9 +38,9 @@ MyEntityManager::MyEntityManager(MyEntityManager const& other){ }
 MyEntityManager& MyEntityManager::operator=(MyEntityManager const& other) { return *this; }
 MyEntityManager::~MyEntityManager(){Release();};
 // Accessors
-void MyEntityManager::AddEntity(String a_sEntity, float a_fMass)
+void MyEntityManager::AddEntity(String a_sEntity, String a_sTag, float a_fMass)
 {
-	MyEntityClass* pEntity = new MyEntityClass(a_sEntity, a_fMass);
+	MyEntityClass* pEntity = new MyEntityClass(a_sEntity, a_sTag ,a_fMass);
 	AddEntity(pEntity);
 }
 void MyEntityManager::AddEntity(MyEntityClass* a_nEntity)
@@ -152,8 +153,7 @@ void MyEntityManager::Update(void)
 	//For each entity apply the forces of all colliding objects
 	for (uint nEntity = 0; nEntity < m_nEntityCount; nEntity++)
 	{
-		if (m_lEntity[nEntity]->GetGravityAffected())
-		{
+
 			std::vector<int> list = m_pColliderManager->GetCollidingVector(nEntity);
 			uint nColliderCount = list.size();
 			vector3 v3AccelerationTotal = m_lEntity[nEntity]->GetForce();
@@ -169,13 +169,24 @@ void MyEntityManager::Update(void)
 				v3AccelerationTotal -= m_lEntity[nEntity]->GetForce();
 				//a = f / m
 				lForce[nEntity] = v3AccelerationTotal / m_lEntity[nEntity]->GetMass();
+
+				//Specific Collision Events Go Here
+				if ((m_lEntity[nEntity]->GetTag() == "player") && (m_lEntity[nIndex]->GetTag() == "building"))
+				{
+					gameOver = true;
+				}
+				if ((m_lEntity[nEntity]->GetTag() == "player") && (m_lEntity[nIndex]->GetTag() == "target"))
+				{
+					m_lEntity[nIndex]->~MyEntityClass();
+					nCollidingEntity--;
+				}
 			}
 			if (nColliderCount > 0)
 			{
 				vector3 v3PosLast = lPositionLast[nEntity];
 				m_lEntity[nEntity]->SetPosition(v3PosLast);
 			}
-		}
+
 	}
 
 	//Set the new forces to the entities

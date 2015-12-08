@@ -128,7 +128,13 @@ void AppClass::Update(void)
 			m_pEntityMngr->gameOver = false;
 			return;
 		}
+<<<<<<< HEAD
+		
+=======
 
+		//Update the system's time
+		m_pSystem->UpdateTime();
+>>>>>>> 8429cb6dbf15fef265343ed641b07bfbe5041f5b
 
 		//Update the mesh manager's time without updating for collision detection
 		m_pMeshMngr->Update(false);
@@ -170,9 +176,14 @@ void AppClass::Update(void)
 		if (numTargets == 0) state = GAME_OVER;
 	}
 	else { // state == GAME_OVER
-		m_pEntityMngr->gameOver = false;
+<<<<<<< HEAD
 		m_pMeshMngr->PrintLine("Game Over! Your Final Score Was " + std::to_string(10 - numTargets) + " / 10 targets");
 		m_pMeshMngr->PrintLine("and you finished in " + std::to_string((int)timePassed) + " seconds!");
+=======
+		m_pEntityMngr->gameOver = false;
+		timePassed = 0.0;
+		m_pMeshMngr->Print("You Lost! Your Final Score Was 0");
+>>>>>>> 8429cb6dbf15fef265343ed641b07bfbe5041f5b
 		m_pMeshMngr->PrintLine("");
 		m_pMeshMngr->Print("Press 'Enter' Or 'Space' To Play Again");
 	}
