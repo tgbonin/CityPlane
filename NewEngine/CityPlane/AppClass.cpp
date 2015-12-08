@@ -11,33 +11,9 @@ void AppClass::InitWindow(String a_sWindowName)
 
 void AppClass::InitVariables(void)
 {
-	m_pCameraMngr->SetPositionTargetAndView(REAXISZ * 30.0f, ZERO_V3, REAXISY);
+	m_pCameraMngr->SetPositionTargetAndView(vector3(-150.0f, 30.0f, 150.0f), vector3(0.0f), REAXISY);
 
 	m_pPlayer = m_pPlayer->Instance();
-
-	m_pMeshMngr->LoadModel("Buildings\\building1.obj", "TestBuilding1");
-	m_pMeshMngr->LoadModel("Buildings\\building2.obj", "TestBuilding2");
-	m_pMeshMngr->LoadModel("Buildings\\building1.obj", "TestBuilding3");
-	m_pMeshMngr->LoadModel("Buildings\\building2.obj", "TestBuilding4");
-	m_pMeshMngr->LoadModel("Buildings\\building1.obj", "TestBuilding5");
-	m_pMeshMngr->LoadModel("Buildings\\building2.obj", "TestBuilding6");
-	m_pMeshMngr->LoadModel("Buildings\\building1.obj", "TestBuilding7");
-	m_pMeshMngr->LoadModel("Buildings\\building2.obj", "TestBuilding8");
-
-	m_pMeshMngr->LoadModel("\\biplane.obj", "PLAYER", false);
-
-	buildings.push_back(vector3(50.0f, 0.0f, -50.0f));
-	buildings.push_back(vector3(30.0f, 0.0f, -20.0f));
-
-	buildings.push_back(vector3(100.0f, 0.0f, -50.0f));
-	buildings.push_back(vector3(80.0f, 0.0f, -20.0f));
-
-	buildings.push_back(vector3(0.0f, 0.0f, -50.0f));
-	buildings.push_back(vector3(30.0f, 0.0f, -700.0f));
-
-	buildings.push_back(vector3(-500.0f, 0.0f, -100.0f));
-	buildings.push_back(vector3(0.0f, 0.0f, 80.0f));
-
 
 	m_pEntityMngr = MyEntityManager::GetInstance();
 
@@ -49,38 +25,57 @@ void AppClass::InitVariables(void)
 	m_pPlayer->SetTarget(vector3(0.0f, 0.0f, 1.0f));
 	m_pPlayer->SetUp(vector3(0.0f, 1.0f, 0.0f));
 
-	m_pEntityMngr->AddEntity("TestBuilding1", INT_MAX);
-	m_pEntityMngr->SetPosition(buildings[0], "TestBuilding1");
-	m_pEntityMngr->SetGravityAffected(false, "TestBuilding1");
+	std::vector<int> buildingLayout = {
+		2, 1, 2, 0, 0, 2,
+		0, 1, 2, 1, 0, 1,
+		1, 0, 2, 0, 2, 0,
+		0, 0, 0, 1, 1, 2,
+		2, 2, 1, 1, 0, 1
+	};
 
-	m_pEntityMngr->AddEntity("TestBuilding2", INT_MAX);
-	m_pEntityMngr->SetPosition(buildings[1], "TestBuilding2");
-	m_pEntityMngr->SetGravityAffected(false, "TestBuilding2");
+	
+	for(int i = 0; i < buildingLayout.size() - 1; i++){
+		String name = "TestBuilding" + std::to_string(i);
 
-	m_pEntityMngr->AddEntity("TestBuilding3", INT_MAX);
-	m_pEntityMngr->SetPosition(buildings[2], "TestBuilding3");
-	m_pEntityMngr->SetGravityAffected(false, "TestBuilding3");
+		int row = (i / 6);
+		int col = (i % 6);
+		float separation = 40.0;
+		vector3 pos(-150.0f + (separation * row), 0.0f, -150.0f + (separation * col));
 
-	m_pEntityMngr->AddEntity("TestBuilding4", INT_MAX);
-	m_pEntityMngr->SetPosition(buildings[3], "TestBuilding4");
-	m_pEntityMngr->SetGravityAffected(false, "TestBuilding4");
+		switch (buildingLayout[i])
+		{
+			case 0: 
+				name = "target" + std::to_string(i);
+				m_pMeshMngr->LoadModel("\\target.obj", name);
 
-	m_pEntityMngr->AddEntity("TestBuilding5", INT_MAX);
-	m_pEntityMngr->SetPosition(buildings[4], "TestBuilding5");
-	m_pEntityMngr->SetGravityAffected(false, "TestBuilding5");
+				pos.y = rand() % 30 + 10;
+				targets.push_back(pos);
 
-	m_pEntityMngr->AddEntity("TestBuilding6", INT_MAX);
-	m_pEntityMngr->SetPosition(buildings[5], "TestBuilding6");
-	m_pEntityMngr->SetGravityAffected(false, "TestBuilding6");
+				m_pEntityMngr->AddEntity(name, INT_MAX);
+				m_pEntityMngr->SetPosition(pos, name);
+				m_pEntityMngr->SetGravityAffected(false, name);
 
-	m_pEntityMngr->AddEntity("TestBuilding7", INT_MAX);
-	m_pEntityMngr->SetPosition(buildings[6], "TestBuilding7");
-	m_pEntityMngr->SetGravityAffected(false, "TestBuilding7");
+				break;
+			case 1:
+				m_pMeshMngr->LoadModel("Buildings\\building1.obj", name);
 
-	m_pEntityMngr->AddEntity("TestBuilding8", INT_MAX);
-	m_pEntityMngr->SetPosition(buildings[7], "TestBuilding8");
-	m_pEntityMngr->SetGravityAffected(false, "TestBuilding8");
+				m_pEntityMngr->AddEntity(name, INT_MAX);
+				m_pEntityMngr->SetPosition(pos, name);
+				m_pEntityMngr->SetGravityAffected(false, name);
 
+					break;
+			case 2:
+				m_pMeshMngr->LoadModel("Buildings\\building2.obj", name);
+
+				m_pEntityMngr->AddEntity(name, INT_MAX);
+				m_pEntityMngr->SetPosition(pos, name);
+				m_pEntityMngr->SetGravityAffected(false, name);
+
+					break;
+		}
+	}
+
+	m_pMeshMngr->LoadModel("\\biplane.obj", "PLAYER", false);
 
 	m_pEntityMngr->AddEntity("PLAYER", 100.0f);
 	m_pEntityMngr->SetPosition(m_pPlayer->position, "PLAYER");
@@ -119,7 +114,6 @@ void AppClass::Update(void)
 		m_pEntityMngr->SetPosition(m_pPlayer->position, "PLAYER");
 		m_pEntityMngr->SetModelMatrix(m_pPlayer->GetMatrix(), "PLAYER");
 
-		m_pMeshMngr->AddPlaneToQueue(matrix4(1.0f) * glm::scale(vector3(500.0f, 1.0f, 500.0f)) * glm::rotate(90.0f, REAXISX), vector3(0.0f, (153.0f / 255.0f), 0.0f));
 
 		float cameraDamp = 0.1f;
 		vector3 curPos = m_pCameraMngr->GetPosition();
@@ -188,6 +182,8 @@ void AppClass::Display(void)
 	//	m_pMeshMngr->AddGridToQueue(1.0f, REAXIS::XY, REBLUE * 0.75f); //renders the XY grid with a 100% scale
 	//	break;
 	//}
+
+	m_pMeshMngr->AddPlaneToQueue(matrix4(1.0f) * glm::scale(vector3(500.0f, 1.0f, 500.0f)) * glm::rotate(90.0f, REAXISX), vector3(0.0f, (153.0f / 255.0f), 0.0f));
 
 	m_pEntityMngr->Display(ER_MESH); //Display all objects in Entity manager
 	

@@ -19,7 +19,7 @@ class AppClass : public ReEngAppClass
 	int clockIndex;
 	float timePassed = 0;
 	MyEntityManager* m_pEntityMngr;
-	std::vector<vector3> buildings;
+	std::vector<vector3> targets;
 	Player* m_pPlayer;
 	enum GameState { GAME_START, GAME_PLAY, GAME_OVER };
 	GameState state;
