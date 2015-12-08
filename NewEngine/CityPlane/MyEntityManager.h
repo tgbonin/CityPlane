@@ -41,7 +41,7 @@ public:
 	--- String a_nsEntity-> Creates an entity
 	OUTPUT: ---
 	*/
-	void AddEntity(String a_sEntity, float a_fMass);
+	void AddEntity(String a_sEntity, String a_sTag,float a_fMass);
 	/*
 	USAGE: Returns the entry in the specified index, nullptr if un-existent
 	ARGUMENTS:

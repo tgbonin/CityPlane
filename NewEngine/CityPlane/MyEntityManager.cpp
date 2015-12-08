@@ -37,9 +37,9 @@ MyEntityManager::MyEntityManager(MyEntityManager const& other){ }
 MyEntityManager& MyEntityManager::operator=(MyEntityManager const& other) { return *this; }
 MyEntityManager::~MyEntityManager(){Release();};
 // Accessors
-void MyEntityManager::AddEntity(String a_sEntity, float a_fMass)
+void MyEntityManager::AddEntity(String a_sEntity, String a_sTag, float a_fMass)
 {
-	MyEntityClass* pEntity = new MyEntityClass(a_sEntity, a_fMass);
+	MyEntityClass* pEntity = new MyEntityClass(a_sEntity, a_sTag ,a_fMass);
 	AddEntity(pEntity);
 }
 void MyEntityManager::AddEntity(MyEntityClass* a_nEntity)

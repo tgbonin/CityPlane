@@ -51,7 +51,7 @@ void AppClass::InitVariables(void)
 				pos.y = rand() % 30 + 10;
 				targets.push_back(pos);
 
-				m_pEntityMngr->AddEntity(name, INT_MAX);
+				m_pEntityMngr->AddEntity(name, "building", INT_MAX);
 				m_pEntityMngr->SetPosition(pos, name);
 				m_pEntityMngr->SetGravityAffected(false, name);
 
@@ -59,7 +59,7 @@ void AppClass::InitVariables(void)
 			case 1:
 				m_pMeshMngr->LoadModel("Buildings\\building1.obj", name);
 
-				m_pEntityMngr->AddEntity(name, INT_MAX);
+				m_pEntityMngr->AddEntity(name, "building",INT_MAX);
 				m_pEntityMngr->SetPosition(pos, name);
 				m_pEntityMngr->SetGravityAffected(false, name);
 
@@ -67,7 +67,7 @@ void AppClass::InitVariables(void)
 			case 2:
 				m_pMeshMngr->LoadModel("Buildings\\building2.obj", name);
 
-				m_pEntityMngr->AddEntity(name, INT_MAX);
+				m_pEntityMngr->AddEntity(name, "building",INT_MAX);
 				m_pEntityMngr->SetPosition(pos, name);
 				m_pEntityMngr->SetGravityAffected(false, name);
 
@@ -77,7 +77,7 @@ void AppClass::InitVariables(void)
 
 	m_pMeshMngr->LoadModel("\\biplane.obj", "PLAYER", false);
 
-	m_pEntityMngr->AddEntity("PLAYER", 100.0f);
+	m_pEntityMngr->AddEntity("PLAYER", "player",100.0f);
 	m_pEntityMngr->SetPosition(m_pPlayer->position, "PLAYER");
 	m_pEntityMngr->SetGravityAffected(false, "PLAYER");
 
