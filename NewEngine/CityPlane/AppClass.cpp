@@ -84,7 +84,7 @@ void AppClass::InitVariables(void)
 
 	state = GAME_START;
 	clockIndex = m_pSystem->AddClock();
-	m_pEntityMngr->AddEntity("BULLET", "bullet", 1.0f);
+	m_pEntityMngr->AddEntity("bullet", "bullet", 1.0f);
 }
 
 void AppClass::Update(void)
@@ -138,7 +138,7 @@ void AppClass::Update(void)
 		for (int i = 0; i < m_pPlayer->m_bullets.size(); i++)
 		{
 			PlaneBullet* pb = m_pPlayer->m_bullets[i];
-			m_pEntityMngr->SetPosition(pb->position, "BULLET");
+			m_pEntityMngr->SetPosition(pb->position, "bullet");
 			m_pMeshMngr->AddSphereToQueue(glm::translate(pb->position)*glm::scale(vector3(0.5f)), REBLACK, SOLID);
 		}
 
