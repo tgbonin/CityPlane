@@ -19,8 +19,8 @@ void AppClass::InitVariables(void)
 
 	gamepad = new Gamepad(1);
 
-	m_pPlayer->SetPosition(vector3(0.0f, 30.0f, 50.0f));
-	m_pPlayer->SetTarget(vector3(0.0f, 0.0f, 1.0f));
+	m_pPlayer->SetPosition(vector3(120.0f, 30.0f, 50.0f));
+	m_pPlayer->SetTarget(vector3(0.0f, 30.0f, 1.0f));
 	m_pPlayer->SetUp(vector3(0.0f, 1.0f, 0.0f));
 
 	std::vector<int> buildingLayout = {
@@ -33,7 +33,7 @@ void AppClass::InitVariables(void)
 
 	
 	for(int i = 0; i < buildingLayout.size() - 1; i++){
-		String name = "TestBuilding" + std::to_string(i);
+		String name = "Building" + std::to_string(i);
 
 		int row = (i / 6);
 		int col = (i % 6);
@@ -92,15 +92,19 @@ void AppClass::Update(void)
 	//Update the system's time
 	m_pSystem->UpdateTime();
 
+#pragma region GAMESTATE START
 	if (state == GAME_START){
-		m_pMeshMngr->PrintLine("");
-		m_pMeshMngr->PrintLine("");
 		m_pMeshMngr->PrintLine("");
 		m_pMeshMngr->PrintLine("");
 		m_pMeshMngr->PrintLine("                Press 'Enter' Or 'Space' To Start The Game");
 		m_pMeshMngr->PrintLine("");
 		m_pMeshMngr->PrintLine("           Shoot all of the targets to win! Get them all in the");
 		m_pMeshMngr->PrintLine("                          lowest time you can!");
+		m_pMeshMngr->PrintLine("");
+		m_pMeshMngr->PrintLine("								Controls:");
+		m_pMeshMngr->PrintLine("                      Arrow keys or Mouse to steer");
+		m_pMeshMngr->PrintLine("                      W to speed up, S to slow down");
+		m_pMeshMngr->PrintLine("                       Left click or space to fire");
 
 		static double fRunTime = 0.0f;
 		float duration = 30.0f;
@@ -113,18 +117,15 @@ void AppClass::Update(void)
 		float angle = 360 * fPercent;
 
 		matrix4 cameraPos = glm::rotate(angle, REAXISY) * glm::translate(vector3(150.0f, 30.0f, 0.0f));
-		vector3 derp = vector3(cameraPos[3]);
+		vector3 newCameraPos = vector3(cameraPos[3]);
 		
-		m_pCameraMngr->SetPositionTargetAndView(derp, vector3(0.0f), REAXISY);
+		m_pCameraMngr->SetPositionTargetAndView(newCameraPos, vector3(0.0f), REAXISY);
 	}
+#pragma endregion GAMESTATE START
+
+#pragma region GAMESTATE PLAY
 	else if (state == GAME_PLAY){
 		gamepad->Update();
-		if (m_pPlayer->position.y < 0 || m_pEntityMngr->gameOver){
-			state = GAME_OVER;
-			m_pEntityMngr->gameOver = false;
-			return;
-		}
-
 
 		//Update the mesh manager's time without updating for collision detection
 		m_pMeshMngr->Update(false);
@@ -172,13 +173,29 @@ void AppClass::Update(void)
 		m_pMeshMngr->Print("Targets left: " + std::to_string(m_pEntityMngr->GetNumTargets()) , REWHITE);
 
 		if (m_pEntityMngr->GetNumTargets() == 0) state = GAME_OVER;
+
+		if (m_pPlayer->position.y < 0 || m_pEntityMngr->gameOver){
+			state = GAME_OVER;
+ 			m_pEntityMngr->gameOver = false;
+			return;
+		}
+
 	}
+#pragma endregion GAMESTATE PLAY
+
 	else { // state == GAME_OVER
 		m_pEntityMngr->gameOver = false;
-		m_pMeshMngr->PrintLine("Game Over! Your Final Score Was " + std::to_string(10 - m_pEntityMngr->GetNumTargets()) + " / 10 targets");
-		m_pMeshMngr->PrintLine("and you finished in " + std::to_string((int)timePassed) + " seconds!");
+
+		if (m_pEntityMngr->GetNumTargets() == 0)
+		{
+			m_pMeshMngr->PrintLine("You win! You destroyed all of the targets in " + std::to_string((int)timePassed) + " seconds!");
+		}
+		else{
+			m_pMeshMngr->PrintLine("Game Over! Your Final Score Was " + std::to_string(10 - m_pEntityMngr->GetNumTargets()) + " / 10 targets");
+			m_pMeshMngr->PrintLine("and you finished in " + std::to_string((int)timePassed) + " seconds!");
+		}
 		m_pMeshMngr->PrintLine("");
-		m_pMeshMngr->Print("Press 'Escape' to exit the game");
+		m_pMeshMngr->Print("Press 'Enter' or 'Space' to restart!");
 	}
 	
 }

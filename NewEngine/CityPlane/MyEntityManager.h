@@ -131,6 +131,9 @@ public:
 	ARGUMENTS: ---
 	OUTPUT: ---
 	*/
+
+	void DeleteTargets(void);
+
 	void Update(void);
 	/*
 	USAGE: Calculates the position of the entity based on the
@@ -141,6 +144,7 @@ public:
 	OUTPUT: ---
 	*/
 	int GetNumTargets(void);
+	void SetNumTargets(int numTargets);
 
 	void Display(int a_nRenderMode = ER_MESH);
 
