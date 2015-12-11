@@ -124,9 +124,13 @@ void AppClass::ProcessKeyboard(void)
 		}
 
 		//Fire
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && m_pPlayer->currentTime - m_pPlayer->timeLastFired > 1.5f){
-			m_pPlayer->fireBullet();
-			m_pPlayer->timeLastFired = m_pPlayer->currentTime;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && currentTime - timeLastFired > 2.0f){
+			String s = "BULLET" + std::to_string(currentTime);
+			timeLastFired = currentTime;
+			m_pEntityMngr->AddEntity("BULLET", "BULLET", 1.0f);
+			PlaneBullet* pb = new PlaneBullet(m_pPlayer->position + m_pPlayer->forward*3.0f, m_pPlayer->forward);
+			m_bullets.push_back(pb);
+			pb->timeFired = timeLastFired;
 		}
 
 	}

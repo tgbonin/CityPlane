@@ -117,6 +117,7 @@ xcopy "$(SolutionDir)_Binary\Shaders" "$(SolutionDir)include\RE\Shaders" /y</Com
     <ClInclude Include="MyBOManager.h" />
     <ClInclude Include="MyEntityClass.h" />
     <ClInclude Include="MyEntityManager.h" />
+    <ClInclude Include="MyOctant.h" />
     <ClInclude Include="PlaneBullet.h" />
     <ClInclude Include="Player.h" />
   </ItemGroup>
@@ -132,6 +133,7 @@ xcopy "$(SolutionDir)_Binary\Shaders" "$(SolutionDir)include\RE\Shaders" /y</Com
     <ClCompile Include="MyBOManager.cpp" />
     <ClCompile Include="MyEntityClass.cpp" />
     <ClCompile Include="MyEntityManager.cpp" />
+    <ClCompile Include="MyOctant.cpp" />
     <ClCompile Include="PlaneBullet.cpp" />
     <ClCompile Include="Player.cpp" />
   </ItemGroup>

@@ -19,5 +19,7 @@ public:
 	vector3 position, forward;
 
 	float distanceTraveled = 0;
+
+	float timeFired = 0;
 };
 

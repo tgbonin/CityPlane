@@ -25,6 +25,11 @@ class AppClass : public ReEngAppClass
 	GameState state;
 	Gamepad* gamepad;
 
+	std::vector <PlaneBullet*> m_bullets;
+
+	float timeLastFired = 0.0f;
+	float currentTime = 0.0f;
+
 public:
 	typedef ReEngAppClass super;
 	/*
