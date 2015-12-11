@@ -186,7 +186,7 @@ void MyEntityManager::Update(void)
 				//f = m * a
 				v3AccelerationOther = v3AccelerationOther / m_lEntity[nIndex]->GetMass();
 				v3AccelerationTotal += v3AccelerationOther;
-				v3AccelerationTotal += vector3( 0.0f, 9.81f, 0.0f) * fDeltaTime;
+				v3AccelerationTotal += vector3(0.0f, 9.81f, 0.0f) * fDeltaTime;
 				v3AccelerationTotal -= m_lEntity[nEntity]->GetForce();
 				//a = f / m
 				lForce[nEntity] = v3AccelerationTotal / m_lEntity[nEntity]->GetMass();
@@ -203,7 +203,7 @@ void MyEntityManager::Update(void)
 					m_lEntity[nIndex]->~MyEntityClass();
 					nCollidingEntity--;
 				}
-				if ((m_lEntity[nEntity]->GetTag() == "bullet") && (m_lEntity[nIndex]->GetTag() == "target"))
+				if ((m_lEntity[nEntity]->GetTag() == "BULLET") && (m_lEntity[nIndex]->GetTag() == "target"))
 				{
 					numTargets--;
 					m_lEntity[nIndex]->~MyEntityClass();

@@ -84,7 +84,6 @@ void AppClass::InitVariables(void)
 
 	state = GAME_START;
 	clockIndex = m_pSystem->AddClock();
-	m_pEntityMngr->AddEntity("BULLET", "bullet", 1.0f);
 }
 
 void AppClass::Update(void)
@@ -136,11 +135,17 @@ void AppClass::Update(void)
 		m_pEntityMngr->SetPosition(m_pPlayer->position, "PLAYER");
 		m_pEntityMngr->SetModelMatrix(m_pPlayer->GetMatrix(), "PLAYER");
 
-		for (int i = 0; i < m_pPlayer->m_bullets.size(); i++)
+		for (int i = 0; i < m_bullets.size(); i++)
 		{
-			PlaneBullet* pb = m_pPlayer->m_bullets[i];
-			m_pEntityMngr->SetPosition(pb->position, "BULLET");
-			m_pMeshMngr->AddSphereToQueue(glm::translate(pb->position)*glm::scale(vector3(0.5f)), REBLACK, SOLID);
+			PlaneBullet* pb = m_bullets[i];
+			pb->Update();
+			if (pb->distanceTraveled > 200.0f){
+				m_bullets.erase(m_bullets.begin() + i);
+			}
+			else {
+				m_pEntityMngr->SetPosition(pb->position, "BULLET");
+				m_pMeshMngr->AddSphereToQueue(glm::translate(pb->position)*glm::scale(vector3(0.5f)), REBLACK, SOLID);
+			}
 		}
 
 
@@ -159,7 +164,7 @@ void AppClass::Update(void)
 			);
 		timePassed += m_pSystem->LapClock(clockIndex);
 		
-		m_pPlayer->currentTime = timePassed;
+		currentTime = timePassed;
 		//Indicate the FPS
 		int nFPS = m_pSystem->GetFPS();
 		//print info into the console
