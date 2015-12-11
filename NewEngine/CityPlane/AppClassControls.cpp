@@ -143,10 +143,16 @@ void AppClass::ProcessKeyboard(void)
 		{
 			m_pPlayer->MoveForward(0.1f);
 		}
+		if (gamepad->GetButtonPressed(XButtons.A)){
+			m_pPlayer->MoveForward(0.1f);
+		}
 
 		//slow-down
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 		{
+			m_pPlayer->MoveForward(-0.05f);
+		}
+		if (gamepad->GetButtonPressed(XButtons.A)){
 			m_pPlayer->MoveForward(-0.05f);
 		}
 
@@ -172,6 +178,14 @@ void AppClass::ProcessKeyboard(void)
 
 		//Fire
 		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Mouse::isButtonPressed(sf::Mouse::Left)) && currentTime - timeLastFired > 0.2f){
+			String s = "BULLET" + std::to_string(currentTime);
+			timeLastFired = currentTime;
+			m_pEntityMngr->AddEntity("BULLET", "BULLET", 1.0f);
+			PlaneBullet* pb = new PlaneBullet(m_pPlayer->position + m_pPlayer->forward*3.0f, m_pPlayer->forward);
+			m_bullets.push_back(pb);
+			pb->timeFired = timeLastFired;
+		}
+		if (gamepad->GetButtonPressed(XButtons.R_Shoulder)){
 			String s = "BULLET" + std::to_string(currentTime);
 			timeLastFired = currentTime;
 			m_pEntityMngr->AddEntity("BULLET", "BULLET", 1.0f);

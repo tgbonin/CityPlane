@@ -3,6 +3,34 @@
 // Link the 'Xinput' library - Important!
 #pragma comment(lib, "Xinput.lib");
 
+XButtonIDs XButtons;
+
+// 'XButtonIDs' - Default constructor
+XButtonIDs::XButtonIDs()
+{
+	// These values are used to index the XINPUT_Buttons array,
+	// accessing the matching XINPUT button value
+
+	A = 0;
+	B = 1;
+	X = 2;
+	Y = 3;
+
+	DPad.Up = 4;
+	DPad.Down = 5;
+	DPad.Left = 6;
+	DPad.Right = 7;
+
+	LShoulder = 8;
+	RShoulder = 9;
+
+	LThumbstick = 10;
+	RThumbstick = 11;
+
+	Start = 12;
+	Back = 13;
+}
+
 // Default constructor
 Gamepad::Gamepad() {}
 
@@ -48,6 +76,17 @@ bool Gamepad::Connected()
 		return true;  // The gamepad is connected
 	else
 		return false; // The gamepad is not connected
+}
+
+// Return true if button is pressed, false if not
+bool Gamepad::GetButtonPressed(int a_iButton)
+{
+	if (m_State.Gamepad.wButtons & XINPUT_Buttons[a_iButton])
+	{
+		return true; // The button is pressed
+	}
+
+	return false; // The button is not pressed
 }
 
 // Update gamepad state
