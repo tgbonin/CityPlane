@@ -233,9 +233,9 @@ bool MyBOClass::SAT(MyBOClass* const a_pOther)
 
 	// Compute translation vector v3Distance (this is the distance between both centers)
 	vector3 v3Distance = v3CenterGlobalB - v3CenterGlobalA; //distance in global space
-															// Bring translation into a's coordinate frame
+	// Bring translation into a's coordinate frame
 	v3Distance = vector3(glm::dot(v3Distance, v3RotationA[0]), glm::dot(v3Distance, v3RotationA[1]), glm::dot(v3Distance, v3RotationA[2])); //distance in A's local
-																																			// their cross product is (near) null (see the orange book for details)
+	// their cross product is (near) null (see the orange book for details)
 	for (int i = 0; i < 3; i++)
 		for (int j = 0; j < 3; j++)
 			m3RotationAbs[i][j] = std::abs(m3Rotation[i][j]) + 0.0001f;
@@ -497,32 +497,32 @@ bool MyBOClass::IsColliding(MyBOClass* const a_pOther)
 	//Are they colliding?
 	//For Objects we will assume they are colliding, unless at least one of the following conditions is not met
 	//first check the bounding sphere, if that is not colliding we can guarantee that there are no collision
-	if ((m_fRadius + a_pOther->m_fRadius) < glm::distance(m_v3CenterG, a_pOther->m_v3CenterG))
-		return false;
-
-	//If the distance was smaller it might be colliding
+	//if ((m_fRadius + a_pOther->m_fRadius) < glm::distance(m_v3CenterG, a_pOther->m_v3CenterG))
+	//	return false;
+	//
+	////If the distance was smaller it might be colliding
 	bool bColliding = true;
-
-	//Check for X
-	if (m_v3MaxG.x < a_pOther->m_v3MinG.x)
-		bColliding = false;
-	if (m_v3MinG.x > a_pOther->m_v3MaxG.x)
-		bColliding = false;
-
-	//Check for Y
-	if (m_v3MaxG.y < a_pOther->m_v3MinG.y)
-		bColliding = false;
-	if (m_v3MinG.y > a_pOther->m_v3MaxG.y)
-		bColliding = false;
-
-	//Check for Z
-	if (m_v3MaxG.z < a_pOther->m_v3MinG.z)
-		bColliding = false;
-	if (m_v3MinG.z > a_pOther->m_v3MaxG.z)
-		bColliding = false;
-
-	if (bColliding == false)
-		return false;
+	//
+	////Check for X
+	//if (m_v3MaxG.x < a_pOther->m_v3MinG.x)
+	//	bColliding = false;
+	//if (m_v3MinG.x > a_pOther->m_v3MaxG.x)
+	//	bColliding = false;
+	//
+	////Check for Y
+	//if (m_v3MaxG.y < a_pOther->m_v3MinG.y)
+	//	bColliding = false;
+	//if (m_v3MinG.y > a_pOther->m_v3MaxG.y)
+	//	bColliding = false;
+	//
+	////Check for Z
+	//if (m_v3MaxG.z < a_pOther->m_v3MinG.z)
+	//	bColliding = false;
+	//if (m_v3MinG.z > a_pOther->m_v3MaxG.z)
+	//	bColliding = false;
+	//
+	//if (bColliding == false)
+	//	return false;
 #endif
 	return SAT(a_pOther);
 }
