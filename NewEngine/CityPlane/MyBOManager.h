@@ -156,6 +156,11 @@ public:
 	*/
 	void Update(void);
 
+	void CheckCollisionsByList(std::vector<int> a_lIndexList);
+
+	std::vector<int> GetObjectsInsideBox(vector3 a_v3BoxPos, float a_fBoxSize);
+	vector4 GetSizeAndMid();
+
 private:
 	/*
 	USAGE: instantiates the object

@@ -70,6 +70,10 @@ void AppClass::InitVariables(void)
 
 					break;
 		}
+
+		vector4 RootSizeMid = m_pEntityMngr->m_pColliderManager->GetSizeAndMid();
+		m_pRoot = new MyOctant(vector3(0.0f), 20.0f);
+		m_pRoot->Subdivide();
 	}
 
 	m_pMeshMngr->LoadModel("\\biplane.obj", "PLAYER", false);
@@ -155,6 +159,8 @@ void AppClass::Update(void)
 
 		vector3 posFinal = curPos + (diff * cameraDamp);
 
+		m_pRoot->OcTreeCollisions();
+
 		//update the follow camera
 		m_pCameraMngr->SetPositionTargetAndView(
 			posFinal,
@@ -196,9 +202,13 @@ void AppClass::Display(void)
 
 	m_pEntityMngr->Display(ER_MESH); //Display all objects in Entity manager
 	
+	m_pRoot->Display();
+
 	m_pMeshMngr->Render(); //renders the render list
 
 	m_pGLSystem->GLSwapBuffers(); //Swaps the OpenGL buffers
+
+
 }
 
 void AppClass::Release(void)

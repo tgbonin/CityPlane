@@ -164,6 +164,8 @@ public:
 	*/
 	void DisplayReAlligned(vector3 a_v3Color = REDEFAULT);
 
+	bool InsideNode(vector3 a_v3BoxPos, float a_fBoxSize);
+
 private:
 	/*
 	USAGE: Deallocates member fields

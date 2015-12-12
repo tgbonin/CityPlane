@@ -11,6 +11,7 @@ Date: 2015/09
 
 #include "Player.h"
 #include "Gamepad.h"
+#include "MyOctant.h"
 
 using namespace ReEng; //Using ReEng namespace to use all the classes in the dll
 
@@ -26,6 +27,8 @@ class AppClass : public ReEngAppClass
 	Gamepad* gamepad;
 
 	std::vector <PlaneBullet*> m_bullets;
+
+	MyOctant* m_pRoot;
 
 	float timeLastFired = 0.0f;
 	float currentTime = 0.0f;

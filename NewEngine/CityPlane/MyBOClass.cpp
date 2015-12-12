@@ -526,3 +526,28 @@ bool MyBOClass::IsColliding(MyBOClass* const a_pOther)
 #endif
 	return SAT(a_pOther);
 }
+
+bool MyBOClass::InsideNode(vector3 a_v3BoxPos, float a_fBoxSize)
+{
+	bool bColliding = true;
+
+	//Check for X
+	if (m_v3MaxG.x < a_v3BoxPos.x - a_fBoxSize)
+		bColliding = false;
+	if (m_v3MinG.x > a_v3BoxPos.x + a_fBoxSize)
+		bColliding = false;
+
+	//Check for Y
+	if (m_v3MaxG.y < a_v3BoxPos.y - a_fBoxSize)
+		bColliding = false;
+	if (m_v3MinG.y > a_v3BoxPos.y + a_fBoxSize)
+		bColliding = false;
+
+	//Check for Z
+	if (m_v3MaxG.z < a_v3BoxPos.z - a_fBoxSize)
+		bColliding = false;
+	if (m_v3MinG.z > a_v3BoxPos.z + a_fBoxSize)
+		bColliding = false;
+
+	return bColliding;
+}
