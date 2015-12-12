@@ -22,18 +22,65 @@ void AppClass::ProcessKeyboard(void)
 #pragma endregion
 
 #pragma region Game State Buttons
-	if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) && state == GAME_START)
+	if ((bLastSpace || bLastReturn) && state == GAME_OVER)
 	{
-		state = GAME_PLAY;
+		m_pEntityMngr->DeleteTargets();
+
+		m_pEntityMngr->SetNumTargets(10);
+
+		std::vector<int> buildingLayout = {
+			2, 1, 2, 0, 0, 2,
+			0, 1, 2, 1, 0, 1,
+			1, 0, 2, 0, 2, 0,
+			0, 3, 0, 1, 1, 2,
+			2, 2, 1, 1, 0, 1
+		};
+
+
+		for (int i = 0; i < buildingLayout.size() - 1; i++){
+			String name = "Building" + std::to_string(i);
+
+			int row = (i / 6);
+			int col = (i % 6);
+			float separation = 40.0;
+			vector3 pos(-120.0f + (separation * row), 0.0f, -100.0f + (separation * col));
+
+			switch (buildingLayout[i])
+			{
+			case 0:
+				name = "target" + std::to_string(i);
+				m_pMeshMngr->LoadModel("\\target.obj", name);
+
+				pos.y = rand() % 30 + 10;
+
+				m_pEntityMngr->AddEntity(name, "target", (float)INT_MAX);
+				m_pEntityMngr->SetPosition(pos, name);
+				m_pEntityMngr->SetGravityAffected(false, name);
+
+				break;
+			}
+		}
+
 
 		m_pPlayer->SetPosition(vector3(120.0f, 30.0f, 50.0f));
 		m_pPlayer->SetTarget(vector3(0.0f, 30.0f, 1.0f));
 		m_pPlayer->SetUp(vector3(0.0f, 1.0f, 0.0f));
-	}
+		m_pPlayer->MoveVertical(0.0f);
 
-	if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) && state == GAME_OVER)
-	{
 		state = GAME_PLAY;
+		m_pEntityMngr->gameOver = false;
+		timePassed = 0;
+	}
+	
+	if ((bLastSpace || bLastReturn) && state == GAME_START)
+	{
+		m_pPlayer->SetPosition(vector3(120.0f, 30.0f, 50.0f));
+		m_pPlayer->SetTarget(vector3(0.0f, 30.0f, 1.0f));
+		m_pPlayer->SetUp(vector3(0.0f, 1.0f, 0.0f));
+		m_pPlayer->MoveVertical(0.0f);
+
+		state = GAME_PLAY;
+		m_pEntityMngr->gameOver = false;
 	}
 #pragma endregion
 
@@ -138,10 +185,7 @@ void AppClass::ProcessKeyboard(void)
 
 #pragma region Other Actions
 	ON_KEY_PRESS_RELEASE(Escape, NULL, PostMessage(m_pWindow->GetHandler(), WM_QUIT, NULL, NULL));
-	ON_KEY_PRESS_RELEASE(F1, NULL, m_pCameraMngr->SetCameraMode(CAMPERSP));
-	ON_KEY_PRESS_RELEASE(F2, NULL, m_pCameraMngr->SetCameraMode(CAMROTHOZ));
-	ON_KEY_PRESS_RELEASE(F3, NULL, m_pCameraMngr->SetCameraMode(CAMROTHOY));
-	ON_KEY_PRESS_RELEASE(F4, NULL, m_pCameraMngr->SetCameraMode(CAMROTHOX));
+
 	bool bEnter = false;
 	ON_KEY_PRESS_RELEASE(Return, NULL, bEnter = true);
 	if (bEnter)

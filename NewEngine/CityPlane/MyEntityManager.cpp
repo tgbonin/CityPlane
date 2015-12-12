@@ -76,6 +76,12 @@ int MyEntityManager::GetIndex(String a_sIndex)
 		return -1;
 	return var->second;//Get the index
 }
+
+void MyEntityManager::SetNumTargets(int nTargets)
+{
+	numTargets = nTargets;
+}
+
 void MyEntityManager::SetMass(float a_fMass, String a_sEntityName)
 {
 	int nIndex = GetIndex(a_sEntityName);
@@ -128,6 +134,19 @@ void MyEntityManager::ApplyForce(vector3 a_v3Force, String a_sEntity)
 		m_lEntity[nIndex]->ApplyForce(a_v3Force);
 	}
 }
+
+void MyEntityManager::DeleteTargets()
+{
+	for (uint nEntity = 0; nEntity < m_nEntityCount; nEntity++)
+	{
+		if (m_lEntity[nEntity]->GetTag() == "target")
+		{
+			m_lEntity[nEntity]->~MyEntityClass();
+			nEntity--;
+		}
+	}
+}
+
 void MyEntityManager::Update(void)
 {
 	//Get the time difference
@@ -176,6 +195,7 @@ void MyEntityManager::Update(void)
 				if ((m_lEntity[nEntity]->GetTag() == "player") && (m_lEntity[nIndex]->GetTag() == "building"))
 				{
 					gameOver = true;
+					std::cout << "Colliding";
 				}
 				if ((m_lEntity[nEntity]->GetTag() == "player") && (m_lEntity[nIndex]->GetTag() == "target"))
 				{
