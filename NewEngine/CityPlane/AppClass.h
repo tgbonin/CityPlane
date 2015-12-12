@@ -31,6 +31,8 @@ class AppClass : public ReEngAppClass
 
 	std::vector <PlaneBullet*> m_bullets;
 
+	MyOctant* m_pRoot;
+
 	float timeLastFired = 0.0f;
 	float currentTime = 0.0f;
 

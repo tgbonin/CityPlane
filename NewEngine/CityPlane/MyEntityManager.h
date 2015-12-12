@@ -15,13 +15,14 @@ class MyEntityManager
 	static MyEntityManager* m_pInstance; // Singleton pointer
 	std::vector<MyEntityClass*> m_lEntity; //list of elements
 	std::map<String, uint> m_map;//Map relating the mesh and the index
-	MyBOManager* m_pColliderManager = nullptr; //Collider manager
+	
 	int numTargets;
 
 	bool d_DISPLAYOCTREE = false;
 	MyOctant* m_pRoot = nullptr;
 
 public:
+	MyBOManager* m_pColliderManager = nullptr; //Collider manager
 	/*
 	USAGE: returns the singleton pointer
 	ARGUMENTS: ---
