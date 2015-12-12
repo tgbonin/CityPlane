@@ -11,6 +11,7 @@ Date: 2015/09
 
 #include "Player.h"
 #include "Gamepad.h"
+#include "MyOctant.h"
 
 using namespace ReEng; //Using ReEng namespace to use all the classes in the dll
 
@@ -24,6 +25,9 @@ class AppClass : public ReEngAppClass
 	enum GameState { GAME_START, GAME_PLAY, GAME_OVER };
 	GameState state;
 	Gamepad* gamepad;
+
+	bool m_bShowOcTree = false;
+	MyOctant* m_pRoot = nullptr;
 
 	std::vector <PlaneBullet*> m_bullets;
 

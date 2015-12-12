@@ -5,7 +5,8 @@ Date: 2015/11
 #ifndef __MYENTITY_H_
 #define __MYENTITY_H_
 
-#include "MyBOManager.h"
+#include "MyOctant.h"
+
 enum ENTITYRM
 {
 	ER_MESH = 1,

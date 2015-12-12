@@ -138,6 +138,9 @@ public:
 	- MyBOClass* const a_pOther -> Other object to check collision with
 	OUTPUT: result of the collision
 	*/
+
+	bool InsideNode(vector3 a_v3BoxPos, float a_fSize);
+
 	bool SAT(MyBOClass* const a_pOther);
 	/*
 	USAGE: Displays the Bounding Sphere of the BO in the specified color

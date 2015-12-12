@@ -221,6 +221,76 @@ void MyBOManager::CheckCollisions(void)
 		}
 	}
 }
+
+void MyBOManager::CheckCollisionsByList(std::vector<int> a_lIndexList)
+{
+	for (uint nObjectA = 0; nObjectA < a_lIndexList.size() - 1; nObjectA++)
+	{
+		for (uint nObjectB = nObjectA + 1; nObjectB < a_lIndexList.size(); nObjectB++)
+		{
+			if (m_lObject[a_lIndexList[nObjectA]]->IsColliding(m_lObject[a_lIndexList[nObjectB]]))
+			{
+				m_llCollidingIndices[a_lIndexList[nObjectA]].push_back(a_lIndexList[nObjectA]);
+				m_llCollidingIndices[a_lIndexList[nObjectB]].push_back(a_lIndexList[nObjectB]);
+			}
+		}
+	}
+}
+
+std::vector<int> MyBOManager::GetObjectsInsideBox(vector3 a_v3BoxPos, float a_fBoxSize)
+{
+	std::vector<int> indexList;
+
+	for (uint nObject = 0; nObject < m_nObjectCount; nObject++)
+	{
+		if (m_lObject[nObject]->InsideNode(a_v3BoxPos, a_fBoxSize))
+		{
+			indexList.push_back(nObject);
+		}
+	}
+
+	return indexList;
+}
+
+vector4 MyBOManager::GetSizeAndMid()
+{
+	vector3 maxSize(0.0f);
+	vector3 minSize(0.0f);
+
+	for (int nEntity = 0; nEntity < m_nObjectCount; nEntity++)
+	{
+		vector3 pos = m_lObject[nEntity]->GetCenterGlobal();
+		for (int i = 0; i < 3; i++)
+		{
+			if (pos[i] > maxSize[i]) maxSize[i] = pos[i];
+			if (pos[i] < minSize[i]) minSize[i] = pos[i];
+		}
+	}
+
+	vector3 mid = maxSize - minSize;
+	mid /= 2;
+
+	float size;
+	if (glm::distance(maxSize, vector3(0.0f)) > glm::distance(minSize, vector3(0.0f)))
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			if (maxSize[j] < 0.0f) maxSize[j] *= -1;
+			if (minSize[j] < 0.0f) maxSize[j] *= -1;
+		}
+
+		size = maxSize[0];
+		if (maxSize[1] > size) size = maxSize[1];
+		if (maxSize[2] > size) size = maxSize[2];
+		if (minSize[1] > size) size = minSize[1];
+		if (minSize[2] > size) size = minSize[2];
+		if (minSize[0] > size) size = minSize[0];
+	}
+
+	return vector4(mid, size);
+}
+
+
 std::vector<int> MyBOManager::GetCollidingVector(String a_sIndex)
 {
 	int nIndex = GetIndex(a_sIndex);

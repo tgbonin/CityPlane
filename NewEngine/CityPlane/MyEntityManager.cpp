@@ -164,6 +164,7 @@ void MyEntityManager::Update(void)
 	}
 	//Update the collider manager based on the new positions
 	m_pColliderManager->Update();
+
 	//Get the forces applied this frame
 	std::vector<vector3> lForce;
 	for (uint nEntity = 0; nEntity < m_nEntityCount; nEntity++)
@@ -171,6 +172,14 @@ void MyEntityManager::Update(void)
 		lForce.push_back(m_lEntity[nEntity]->GetForce());
 	}
 	bool bFloorColliding = false;
+
+	//m_pRoot = new MyOctant(vector3(0.0f), 200.0f);
+	//m_pRoot->Subdivide();
+	//
+	//if (d_DISPLAYOCTREE) m_pRoot->Display();
+	//
+	//m_pRoot->OcTreeCollisions();
+
 	//For each entity apply the forces of all colliding objects
 	for (uint nEntity = 0; nEntity < m_nEntityCount; nEntity++)
 	{
@@ -224,6 +233,10 @@ void MyEntityManager::Update(void)
 	{
 		m_lEntity[nEntity]->SetForce(lForce[nEntity]);
 	}
+
+
+	//delete m_pRoot;
+	//m_pRoot = nullptr;
 }
 void MyEntityManager::Display(int a_nRenderMode)
 {

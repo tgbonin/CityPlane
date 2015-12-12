@@ -171,7 +171,7 @@ void AppClass::ProcessKeyboard(void)
 		}
 
 		//Fire
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && currentTime - timeLastFired > 2.0f){
+		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Mouse::isButtonPressed(sf::Mouse::Left)) && currentTime - timeLastFired > 0.2f){
 			String s = "BULLET" + std::to_string(currentTime);
 			timeLastFired = currentTime;
 			m_pEntityMngr->AddEntity("BULLET", "BULLET", 1.0f);

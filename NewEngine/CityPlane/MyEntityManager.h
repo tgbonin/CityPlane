@@ -6,6 +6,7 @@ Date: 2015/11
 #define __MYENTITYMANAGER_H_
 
 #include "MyEntityClass.h"
+#include "MyOctant.h"
 
 //System Class
 class MyEntityManager
@@ -16,6 +17,10 @@ class MyEntityManager
 	std::map<String, uint> m_map;//Map relating the mesh and the index
 	MyBOManager* m_pColliderManager = nullptr; //Collider manager
 	int numTargets;
+
+	bool d_DISPLAYOCTREE = false;
+	MyOctant* m_pRoot = nullptr;
+
 public:
 	/*
 	USAGE: returns the singleton pointer

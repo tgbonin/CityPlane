@@ -202,7 +202,6 @@ void AppClass::Update(void)
 		m_pMeshMngr->PrintLine("");
 		m_pMeshMngr->Print("Press 'Enter' or 'Space' to restart!");
 	}
-	
 }
 
 void AppClass::Display(void)
